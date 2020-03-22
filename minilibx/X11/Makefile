@@ -14,10 +14,10 @@
 all	: do_configure
 
 do_configure	:
-	./configure
+	@./configure
 
 clean	:
-	./configure clean
+	@./configure clean
 
 re	:
 	@$(MAKE) clean --no-print-directory

@@ -31,17 +31,17 @@ SRC	= mlx_init.c mlx_new_window.c mlx_pixel_put.c mlx_loop.c \
 	mlx_rgb.c mlx_destroy_image.c
 
 OBJ	=$(SRC:.c=.o)
-CFLAGS	= -O3 -I$(INC)
+CFLAGS	= -w -O3 -I$(INC)
 
 all	: $(NAME) $(DOCP)
 
 $(NAME)	: $(OBJ)
-	ar -r $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@ar -r $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 do_cp	:
-	cp $(NAME) libmlx_$(HT).a
+	@cp $(NAME) libmlx_$(HT).a
 
 
 clean	:
-	rm -f $(OBJ) $(NAME) *~ core *.core
+	@rm -f $(OBJ) $(NAME) *~ core *.core
