@@ -16,3 +16,13 @@ t_vec	vec_set(t_vec vec, double x, double y, double z)
 	vec.z = z;
 	return (vec);
 }
+
+t_vec	new_vec(double x, double y, double z)
+{
+	t_vec vec;
+
+	vec.x = x;
+	vec.y = y;
+	vec.z = z;
+	return (vec);
+}

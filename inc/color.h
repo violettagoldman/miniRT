@@ -3,9 +3,9 @@
 
 typedef struct		s_color
 {
-	double r;
-	double g;
-	double b;
+	int r;
+	int g;
+	int b;
 }					t_color;
 
 #endif

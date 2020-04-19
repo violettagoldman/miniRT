@@ -1,9 +1,10 @@
 #include "../inc/sphere.h"
 #include "../inc/vec.h"
+#include "../inc/color.h"
 #include "../inc/ray.h"
 #include <stdlib.h>
 
-t_sphere	*create_sphere(t_vec c, double r)
+t_sphere	*create_sphere(t_vec c, double r, t_color color)
 {
 	t_sphere *sphere;
 
@@ -11,5 +12,6 @@ t_sphere	*create_sphere(t_vec c, double r)
 		return (NULL);
 	sphere->c = c;
 	sphere->r = r;
+	sphere->color = color;
 	return (sphere);
 }
