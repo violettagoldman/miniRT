@@ -1,4 +1,4 @@
-#include "../inc/vec.h"
+#include "../rt.h"
 
 t_vec	vec_add(t_vec a, t_vec b)
 {

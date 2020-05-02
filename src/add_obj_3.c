@@ -1,4 +1,4 @@
-#include "../inc/parse.h"
+#include "../rt.h"
 
 void	add_square(char *line, t_obj *obj)
 {

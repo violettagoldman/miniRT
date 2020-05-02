@@ -1,6 +1,6 @@
-#include "../inc/window.h"
+#include "../rt.h"
 
-void	create_window(t_window *window)
+void		create_window(t_window *window)
 {
 	int	bits_pixel = 32;
 	int	line_size = 4 * window->w;
@@ -14,13 +14,47 @@ void	create_window(t_window *window)
 	&line_size, &endian);
 }
 
-void	put_pixel(t_window window, int x, int y, t_color color)
+void		put_pixel(t_window window, int x, int y, t_vec color)
 {
 	int	index;
 
+	if (x >= window.w || x < 0 || y < 0 || y >= window.h)
+		return ;
 	index = x * 4 + y * 4 * window.w;
-	window.image_data[index + 0] = color.b;
-	window.image_data[index + 1] = color.g;
-	window.image_data[index + 2] = color.r;
-	window.image_data[index + 3] = 0;
+	window.image_data[index + 0] = (char)(256 * ft_clamp(color.z, 0.0, 0.999));
+	window.image_data[index + 1] = (char)(256 * ft_clamp(color.y, 0.0, 0.999));
+	window.image_data[index + 2] = (char)(256 * ft_clamp(color.x, 0.0, 0.999));
+	window.image_data[index + 3] = (char)0;
+}
+
+int			display(t_rt *rt)
+{
+	render(rt);
+	mlx_put_image_to_window(rt->window.mlx, rt->window.window,
+	rt->window.image, 0, 0);
+	return (1);
+}
+
+t_window	window_init()
+{
+	t_rt rt;
+
+	create_window(&rt.window);
+	mlx_put_image_to_window(rt.window.mlx, rt.window.window,
+		rt.window.image, 0, 0);
+	mlx_loop_hook(rt.window.mlx, &display, &rt);
+	mlx_loop(rt.window.mlx);
+	return (rt.window);
+}
+
+t_window	smth(t_rt *rt)
+{
+	create_window(&rt->window);
+	mlx_put_image_to_window(rt->window.mlx, rt->window.window, rt->window.image, 0, 0);
+	mlx_loop_hook(rt->window.mlx, &display, rt);
+	mlx_hook(rt->window.window, 2, 1L << 0, &key_pressed, rt);
+	//mlx_hook(rt->window.window, 3, 1L << 1, &key_released, rt);
+	mlx_hook(rt->window.window, 17, 1L << 17, &program_exited, rt);
+	mlx_loop(rt->window.mlx);
+	return (rt->window);
 }

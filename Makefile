@@ -7,7 +7,6 @@ endif
 MLXFLAGS = -framework OpenGL -framework AppKit -Lminilibx -lmlx
 MLX = ./minilibx/libmlx.a
 
-INC_DIR = ./inc/
 SRC_DIR = ./src/
 MLX_DIR = ./minilibx/
 
@@ -41,7 +40,7 @@ run:
 	@./${NAME} $1
 
 norme:
-	@norminette ${INC_DIR} ${SRC_DIR}
+	@norminette ${SRC_DIR} rt.h
 
 clean:
 	@rm -rf obj

@@ -1,7 +1,6 @@
-#include <stdio.h>
-#include "../inc/parse.h"
+#include "../rt.h"
 
-int		ft_atoi(char **str)
+int			ft_atoi(char **str)
 {
 	int		sign;
 	int		res;
@@ -45,4 +44,27 @@ double		ft_atof(char **s)
  		res /= 10;
  	res += integer;
  	return (res);
+}
+
+double		degrees_to_radians(double degrees)
+{
+	return (degrees * PI / 180);
+}
+
+t_hit	face_norm(t_hit hit, t_ray ray, t_vec normal)
+{
+	t_hit r;
+
+	r.front = (vec_dot(ray.d, normal) < 0);
+	r.norm = hit.front ? normal : vec_mult(normal, -1);
+	return (r);
+}
+
+double		ft_clamp(double x, double min, double max)
+{
+	if (x < min)
+		return (min);
+	if (x > max)
+		return (max);
+	return (x);
  }

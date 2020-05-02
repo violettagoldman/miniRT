@@ -1,4 +1,4 @@
-# include "../inc/parse.h"
+# include "../rt.h"
 
 void send_to_obj(char *line, t_rt *rt)
 {

@@ -1,4 +1,4 @@
-#include "../inc/parse.h"
+#include "../rt.h"
 
 void	add_res(char *line, t_rt *rt)
 {
@@ -12,6 +12,8 @@ void	add_res(char *line, t_rt *rt)
 		error("Error\nR: already exists or values are out of bounds");
 	rt->res.x = x;
 	rt->res.y = y;
+	rt->window.w = x;
+	rt->window.h = y;
 }
 
 void	add_amb(char *line, t_rt *rt)
@@ -67,11 +69,14 @@ void	init(t_rt *rt)
 	rt->obj = NULL;
 	rt->c = NULL;
 	rt->l = NULL;
+	rt->window.w = -1;
+	rt->window.h = -1;
 }
 
 int		check_bounds_vec(t_vec vec, int min, int max)
 {
-	if (vec.x < min || vec.x > max || vec.y < min || vec.y > max					|| vec.z < min|| vec.x > max)
+	if (vec.x < min || vec.x > max || vec.y < min || vec.y > max
+		|| vec.z < min|| vec.x > max)
 		return (0);
 	return (1);
 }

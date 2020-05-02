@@ -1,4 +1,4 @@
-#include "../inc/parse.h"
+#include "../rt.h"
 
 void	add_light(char *line, t_rt *rt)
 {

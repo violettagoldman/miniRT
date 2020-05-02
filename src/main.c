@@ -1,25 +1,25 @@
-#include "../inc/window.h"
-#include "../inc/ray.h"
-#include "../inc/parse.h"
-#include "../inc/rt.h"
-#include <stdio.h>
+#include "../rt.h"
 
+int main(int argc, char **argv)
+{
+	(void)argc;
+	t_rt rt;
+
+	//if (!(rt = (t_rt *)malloc(sizeof(t_rt))))
+	//	return (-1);
+	init(&rt);
+	parse(argv[1], &rt);
+	check_parse(rt);
+	smth(&rt);
+    return (0);
+}
+
+/*
 int	main(int argc, char **argv)
 {
 	(void)argc;
 	t_rt rt;
-/*	t_window	window;
-	t_color		color;
-
-	color.r = 0;
-	color.g = 0;
-	color.b = 255;
-	window.w = 500;
-	window.h = 500;
-	create_window(&window);
-	put_pixel(window, 10, 10, color);
-	mlx_put_image_to_window(window.mlx, window.window, window.image, 0, 0);
-	mlx_loop(window.mlx);*/
+	
 	init(&rt);
 	parse(argv[1], &rt);
 	printf("R: x = %d, y = %d\nA: range = %f, r = %d, g = %d, b = %d\n",
@@ -79,5 +79,5 @@ int	main(int argc, char **argv)
 		rt.obj = rt.obj->next;
 	}
 	check_parse(rt);
-	return (0);
-}
+	
+}*/
