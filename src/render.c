@@ -13,18 +13,19 @@ t_vec ray_color(t_rt *rt, t_ray ray)
 	double t = intersect(rt, &hit, ray, &obj);
 	if (t > 0.0)
     {
-      t_sphere light = sphere_new(vec_new(0, 0, 10), 10, color_new(10, 0, 255));
-      t_vec pi = vec_add(ray.o, vec_mult(ray.d, hit.t));
-      t_vec l = vec_sub(light.c, pi);
+      t_light light = light_new(rt->l->vec, rt->l->bright, rt->l->col);
+      t_vec pi = vec_add(ray.o, vec_mult(ray.d, t));
+	  //printf("%f\n", hit.t);
+      t_vec l = vec_sub(light.vec, pi);
 		if (obj.type == 0)
 			n = sphere_norm(obj.sh.sp, pi);
 		//n = sphere_norm(s, pi);
       double dt = vec_dot(vec_norm(l), vec_norm(n));
-      // addition de amb light
+	  // addition de amb light
       t_vec pix_col = vec_mult(
-		vec_add(vec_new(122.0 / 255 + 0.2, 0.0 + 0.2, 200.0 / 255 + 0.2),
-			vec_mult(vec_new(1.0, 1.0, 1.0), dt)), 0.5);
-      return (pix_col);
+		vec_add(color_to_vec(obj.sh.sp.col),
+			vec_mult(color_to_vec(rt->amb.col), dt)), rt->amb.range);
+      return (vec_clamp(pix_col));
       //return (vec_mult(vec_add(hit.norm, new_vec(1, 1, 1)), 0.5));
     }
     t_vec unit_direction = unit_vector(ray.d);
@@ -88,6 +89,7 @@ double	intersect(t_rt *rt, t_hit *hit, t_ray ray, t_obj *obj)
 				inter = 1;
 				closest = hit_tmp.t;
 				*hit = hit_tmp;
+			//	printf("%f\n", hit_tmp.t);
 			}
 		}
 		tmp = tmp->next;

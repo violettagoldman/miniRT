@@ -202,5 +202,7 @@ void		vec_print(t_vec vec);
 int			program_exited(void *rt);
 int			key_pressed(int key, t_rt *rt);
 double		intersect(t_rt *rt, t_hit *hit, t_ray ray, t_obj *obj);
-
+t_light		light_new(t_vec vec, double bright, t_color col);
+t_vec		color_to_vec(t_color col);
+t_vec		vec_clamp(t_vec col);
 #endif

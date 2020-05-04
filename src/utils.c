@@ -57,6 +57,7 @@ t_hit	face_norm(t_hit hit, t_ray ray, t_vec normal)
 
 	r.front = (vec_dot(ray.d, normal) < 0);
 	r.norm = hit.front ? normal : vec_mult(normal, -1);
+	r.t = hit.t;
 	return (r);
 }
 

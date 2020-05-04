@@ -25,8 +25,8 @@ void	camera_init(t_rt *rt)
 		u = unit_vector(vec_cross(tmp->up, w));
 		v = vec_cross(w, u);
 		tmp->origin = tmp->from;
-		tmp->lower_left_corner = vec_sub(vec_sub(tmp->origin, vec_mult(u, half_w)),
-								vec_sub(vec_mult(v, half_h), w));
+		tmp->lower_left_corner = vec_sub(vec_sub(tmp->origin,
+		vec_mult(u, half_w)), vec_sub(vec_mult(v, half_h), w));
 		tmp->horizontal = vec_mult(u, 2 * half_w);
 		tmp->vertical = vec_mult(v, 2 * half_h);
 		tmp = tmp->next;
