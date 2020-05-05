@@ -14,19 +14,46 @@ t_vec ray_color(t_rt *rt, t_ray ray)
 	if (t > 0.0)
     {
       t_light light = light_new(rt->l->vec, rt->l->bright, rt->l->col);
-      t_vec pi = vec_add(ray.o, vec_mult(ray.d, t));
+      t_vec pi = vec_add(ray.o, vec_mult(ray.d, hit.t));
 	  //printf("%f\n", hit.t);
       t_vec l = vec_sub(light.vec, pi);
 		if (obj.type == 0)
 			n = sphere_norm(obj.sh.sp, pi);
+		else if (obj.type == 1)
+			n = vec_mult(obj.sh.pl.norm, -1);
+		else if (obj.type == 2)
+			n = vec_new(0, 0, 1);
+		else if (obj.type == 3)
+			n = vec_new(0, 0, 1);
+		else if (obj.type == 4)
+			n = vec_new(0, 0, 1);
 		//n = sphere_norm(s, pi);
-      double dt = vec_dot(vec_norm(l), vec_norm(n));
-	  // addition de amb light
-      t_vec pix_col = vec_mult(
-		vec_add(color_to_vec(obj.sh.sp.col),
-			vec_mult(color_to_vec(rt->amb.col), dt)), rt->amb.range);
-      return (vec_clamp(pix_col));
-      //return (vec_mult(vec_add(hit.norm, new_vec(1, 1, 1)), 0.5));
+		double dt = vec_dot(vec_norm(l), vec_norm(n));
+		// addition de amb light
+		t_vec pix_col;
+		if (obj.type == 0)
+			pix_col = vec_mult(
+			vec_add(color_to_vec(obj.sh.sp.col),
+				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
+		if (obj.type == 1)
+			pix_col = vec_mult(
+			vec_add(color_to_vec(obj.sh.pl.col),
+				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
+		if (obj.type == 2)
+			pix_col = vec_mult(
+			vec_add(color_to_vec(obj.sh.sq.col),
+				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
+		t_ray shadow;
+		double col_shadow = 1;
+		shadow.o = light.vec;
+		shadow.d = vec_norm(vec_sub(hit.p, light.vec));
+		if (intersect(rt, &hit, shadow, &obj) &&
+			hit.t + 1e-6 < vec_len(vec_sub(hit.p, light.vec)))
+		{
+			printf("HIT.T = %f, LEN = %f\n", hit.t, vec_len(vec_sub(hit.p, light.vec)));
+			col_shadow = 0.2;
+		}
+		return (vec_clamp(vec_mult(pix_col, col_shadow)));
     }
     t_vec unit_direction = unit_vector(ray.d);
     t = 0.5 * (unit_direction.y + 1.0);
@@ -81,18 +108,32 @@ double	intersect(t_rt *rt, t_hit *hit, t_ray ray, t_obj *obj)
 	tmp = rt->obj;
 	while (tmp)
 	{
-		if (tmp->type == 0)
+		if (hit_get(tmp, min, closest, &hit_tmp, ray))
 		{
-			if (hit_sphere(tmp->sh.sp, min, closest, &hit_tmp, ray))
-			{
-				*obj = *tmp;
-				inter = 1;
-				closest = hit_tmp.t;
-				*hit = hit_tmp;
-			//	printf("%f\n", hit_tmp.t);
-			}
+			*obj = *tmp;
+			inter = 1;
+			closest = hit_tmp.t;
+			*hit = hit_tmp;
 		}
 		tmp = tmp->next;
 	}
 	return (inter);
+}
+
+double	hit_get(t_obj *obj, double min, double closest, t_hit *hit, t_ray ray)
+{
+	int type;
+
+	type = obj->type;
+	if (type == 0)
+		 return (hit_sphere(obj->sh.sp, min, closest, hit, ray));
+	else if (type == 1)
+		 return (plane_hit(obj->sh.pl, min, closest, hit, ray));
+	else if (type == 2)
+		return (square_hit(obj->sh.sq, min, closest, hit, ray));
+	else if (type == 3)
+		return  0;//(hit_triangle(obj->sh.tr, min, closest, hit, ray));
+	else if (type == 4)
+		 return 0;//(hit_cylinder(obj->sh.cy, min, closest, hit, ray));
+	return (0);
 }

@@ -6,6 +6,7 @@
 # include <unistd.h>
 # include <math.h>
 # include <fcntl.h>
+# include <pthread.h>
 # include "./src/get_next_line/get_next_line.h"
 # include "./minilibx/elcapitan/mlx.h"
 # define PI 3.1415926535897932385
@@ -205,4 +206,8 @@ double		intersect(t_rt *rt, t_hit *hit, t_ray ray, t_obj *obj);
 t_light		light_new(t_vec vec, double bright, t_color col);
 t_vec		color_to_vec(t_color col);
 t_vec		vec_clamp(t_vec col);
+int			square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray);
+int			plane_hit(t_plane p, double min, double max, t_hit *hit, t_ray ray);
+double		hit_get(t_obj *obj, double min, double closest, t_hit *hit, t_ray ray);
+
 #endif

@@ -20,7 +20,7 @@ void	camera_init(t_rt *rt)
 		tmp->at = vec_add(tmp->vec, tmp->norm);
 		tmp->aspect = (double)rt->window.w / rt->window.h;
 		half_h = tan(degrees_to_radians(tmp->fov) / 2);
-		half_w = tmp->aspect * half_h;
+		half_w = -tmp->aspect * half_h;
 		w = unit_vector(vec_sub(tmp->from, tmp->at));
 		u = unit_vector(vec_cross(tmp->up, w));
 		v = vec_cross(w, u);

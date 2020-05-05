@@ -19,7 +19,6 @@ double	hit_sphere(t_sphere s, double min, double max, t_hit *hit, t_ray ray)
 	double half_b = vec_dot(oc, ray.d);
 	double c = vec_dot(oc, oc) - s.r * s.r;
 	double discriminant = half_b * half_b - a * c;
-
 	if (discriminant > 0)
 	{
 		double root = sqrt(discriminant);
