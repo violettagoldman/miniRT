@@ -151,6 +151,12 @@ typedef struct		s_rt
 	t_window	window;
 }									t_rt;
 
+typedef struct s_test
+{
+	int x;
+	t_rt *rt;
+}				t_test;
+
 void		camera_init(t_rt *rt);
 double		ft_clamp(double x, double min, double max);
 t_hit		face_norm(t_hit hit, t_ray ray, t_vec normal);
@@ -194,7 +200,7 @@ void		create_window(t_window *window);
 void		put_pixel(t_window window, int x, int y, t_vec color);
 int			display(t_rt *rt);
 t_window	window_init();
-void		render(t_rt *rt);
+void		*render(void *arg);
 t_window	smth();
 t_vec		vec_at(t_ray ray, double t);
 t_sphere	sphere_new(t_vec c, double r, t_color col);
@@ -209,5 +215,6 @@ t_vec		vec_clamp(t_vec col);
 int			square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray);
 int			plane_hit(t_plane p, double min, double max, t_hit *hit, t_ray ray);
 double		hit_get(t_obj *obj, double min, double closest, t_hit *hit, t_ray ray);
+int		threads_init(t_rt *rt);
 
 #endif

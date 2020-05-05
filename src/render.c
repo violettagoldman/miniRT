@@ -50,7 +50,7 @@ t_vec ray_color(t_rt *rt, t_ray ray)
 		if (intersect(rt, &hit, shadow, &obj) &&
 			hit.t + 1e-6 < vec_len(vec_sub(hit.p, light.vec)))
 		{
-			printf("HIT.T = %f, LEN = %f\n", hit.t, vec_len(vec_sub(hit.p, light.vec)));
+			//printf("HIT.T = %f, LEN = %f\n", hit.t, vec_len(vec_sub(hit.p, light.vec)));
 			col_shadow = 0.2;
 		}
 		return (vec_clamp(vec_mult(pix_col, col_shadow)));
@@ -60,36 +60,32 @@ t_vec ray_color(t_rt *rt, t_ray ray)
     return vec_add(vec_mult(vec_new(1.0, 1.0, 1.0), 1.0 - t), vec_mult(vec_new(0.5, 0.7, 1.0), t));
 }
 
-void render(t_rt *rt)
+void *render(void *arg)
 {
+	t_rt *rt = (t_rt *)((t_test *)arg)->rt;
     int i;
     int j;
-    int k;
     t_camera cam;
 
     j = rt->window.h;
 	camera_init(rt);
     cam = *(rt->c);
-	while (j > 0)
+	while (j > 0 && (i = ((t_test *)arg)->x) >= 0)
     {
-        i = 0;
-        while (i < rt->window.w)
+        //i = 0;
+		while (i < rt->window.w )
         {
-            k = 0;
             t_vec color = vec_new(0, 0, 0);
-            //while (k < per_pix)
-            //{
               double u = (double)i / rt->window.w;
               double v = (double)j / rt->window.h;
 			  t_ray r = ray_get(cam, u, v);
               color = vec_add(color, ray_color(rt, r));
-              ++k;
-            //}
             put_pixel(rt->window, i, j, color);
-            ++i;
+            i += 16;
         }
         --j;
     }
+	return (NULL);
 }
 
 double	intersect(t_rt *rt, t_hit *hit, t_ray ray, t_obj *obj)

@@ -29,7 +29,8 @@ void		put_pixel(t_window window, int x, int y, t_vec color)
 
 int			display(t_rt *rt)
 {
-	render(rt);
+	//render(rt);
+	threads_init(rt);
 	mlx_put_image_to_window(rt->window.mlx, rt->window.window,
 	rt->window.image, 0, 0);
 	return (1);
