@@ -14,7 +14,7 @@ void send_to_obj(char *line, t_rt *rt)
 		 add_square(line, obj);
 	else if (line[0] == 'c' && line[1] == 'y' && line[2] == ' ')
 		 add_cylinder(line, obj);
-	else if (line[0] == 't' && line[1] == 't' && line[2] == ' ')
+	else if (line[0] == 't' && line[1] == 'r' && line[2] == ' ')
 		 add_triangle(line, obj);
 	if (!rt->obj)
 		rt->obj = obj;
@@ -43,7 +43,7 @@ void	send_to(char *line, t_rt *rt)
 			(line[0] == 'p' && line[1] == 'l' && spaces(line[2])) ||
 			(line[0] == 's' && line[1] == 'q' && spaces(line[2])) ||
 			(line[0] == 'c' && line[1] == 'y' && spaces(line[2])) ||
-			(line[0] == 't' && line[1] == 't' && spaces(line[2])))
+			(line[0] == 't' && line[1] == 'r' && spaces(line[2])))
 			send_to_obj(line, rt);
 }
 

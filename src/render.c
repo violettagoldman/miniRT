@@ -23,10 +23,10 @@ t_vec ray_color(t_rt *rt, t_ray ray)
 			n = vec_mult(obj.sh.pl.norm, -1);
 		else if (obj.type == 2)
 			n = vec_new(0, 0, 1);
-		else if (obj.type == 3)
-			n = vec_new(0, 0, 1);
 		else if (obj.type == 4)
-			n = vec_new(0, 0, 1);
+			n = triangle_norm(obj.sh.tr);
+		else if (obj.type == 3)
+			n = cylinder_norm(obj.sh.cy, hit.p);
 		//n = sphere_norm(s, pi);
 		double dt = vec_dot(vec_norm(l), vec_norm(n));
 		// addition de amb light
@@ -43,6 +43,14 @@ t_vec ray_color(t_rt *rt, t_ray ray)
 			pix_col = vec_mult(
 			vec_add(color_to_vec(obj.sh.sq.col),
 				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
+		if (obj.type == 4)
+			pix_col = vec_mult(
+			vec_add(color_to_vec(obj.sh.tr.col),
+				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
+		if (obj.type == 3)
+			pix_col = vec_mult(
+			vec_add(color_to_vec(obj.sh.cy.col),
+				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
 		t_ray shadow;
 		double col_shadow = 1;
 		shadow.o = light.vec;
@@ -51,7 +59,7 @@ t_vec ray_color(t_rt *rt, t_ray ray)
 			hit.t + 1e-6 < vec_len(vec_sub(hit.p, light.vec)))
 		{
 			//printf("HIT.T = %f, LEN = %f\n", hit.t, vec_len(vec_sub(hit.p, light.vec)));
-			col_shadow = 0.2;
+			col_shadow = 0.4;
 		}
 		return (vec_clamp(vec_mult(pix_col, col_shadow)));
     }
@@ -127,9 +135,9 @@ double	hit_get(t_obj *obj, double min, double closest, t_hit *hit, t_ray ray)
 		 return (plane_hit(obj->sh.pl, min, closest, hit, ray));
 	else if (type == 2)
 		return (square_hit(obj->sh.sq, min, closest, hit, ray));
-	else if (type == 3)
-		return  0;//(hit_triangle(obj->sh.tr, min, closest, hit, ray));
 	else if (type == 4)
-		 return 0;//(hit_cylinder(obj->sh.cy, min, closest, hit, ray));
+		return  (triangle_hit(obj->sh.tr, min, closest, hit, ray));
+	else if (type == 3)
+		 return (cylinder_hit(obj->sh.cy, min, closest, hit, ray));
 	return (0);
 }

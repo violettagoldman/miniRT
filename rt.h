@@ -215,6 +215,11 @@ t_vec		vec_clamp(t_vec col);
 int			square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray);
 int			plane_hit(t_plane p, double min, double max, t_hit *hit, t_ray ray);
 double		hit_get(t_obj *obj, double min, double closest, t_hit *hit, t_ray ray);
-int		threads_init(t_rt *rt);
+int			threads_init(t_rt *rt);
+int			triangle_hit(t_triangle tr, double min, double max, t_hit *hit, t_ray ray);
+t_vec		triangle_norm(t_triangle tr);
+int			cylinder_hit(t_cylinder cy, double min, double max, t_hit *hit, t_ray ray);
+int			base_hit(t_cylinder cy, t_ray ray, double *dist, t_vec c, t_vec center);
+t_vec		cylinder_norm(t_cylinder cy, t_vec p);
 
 #endif
