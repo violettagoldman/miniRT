@@ -29,3 +29,18 @@ t_vec		vec_clamp(t_vec col)
 	vec.z = (double)ft_clamp(col.z, 0, 0.999);
 	return (vec);
 }
+
+t_vec	color_get(t_obj obj)
+{
+	if (obj.type == 0)
+		return (color_to_vec(obj.sh.sp.col));
+	else if (obj.type == 1)
+		return (color_to_vec(obj.sh.pl.col));
+	else if (obj.type == 2)
+		return (color_to_vec(obj.sh.sq.col));
+	else if (obj.type == 3)
+		return (color_to_vec(obj.sh.cy.col));
+	else
+		return (color_to_vec(obj.sh.tr.col));
+}
+

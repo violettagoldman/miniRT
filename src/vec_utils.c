@@ -9,3 +9,13 @@ void	vec_print(t_vec vec)
 {
 	printf("%f %f %f\n", vec.x, vec.y, vec.z);
 }
+
+t_vec	vec_mult_vec(t_vec a, t_vec b)
+{
+	t_vec	res;
+
+	res.x = a.x * b.x;
+	res.y = a.y * b.y;
+	res.z = a.z * b.z;
+	return (res);
+}

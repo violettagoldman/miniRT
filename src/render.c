@@ -2,67 +2,42 @@
 
 t_vec ray_color(t_rt *rt, t_ray ray)
 {
-    //t_sphere s;
     t_hit hit;
 	t_obj obj;
-	(void)rt;
 	t_vec n = vec_new(0, 0, 1);
-
-    //s = sphere_new(vec_new(0, 0, 10), 1, color_new(0, 0, 255));
-    //double t = hit_sphere(s, 0, INFINITY, &hit, ray);
+	t_light *tmp;
+	t_vec col;
 	double t = intersect(rt, &hit, ray, &obj);
+	tmp = rt->l;
 	if (t > 0.0)
     {
-      t_light light = light_new(rt->l->vec, rt->l->bright, rt->l->col);
-      t_vec pi = vec_add(ray.o, vec_mult(ray.d, hit.t));
-	  //printf("%f\n", hit.t);
-      t_vec l = vec_sub(light.vec, pi);
 		if (obj.type == 0)
-			n = sphere_norm(obj.sh.sp, pi);
+			n = sphere_norm(obj.sh.sp, hit.p);
 		else if (obj.type == 1)
-			n = vec_mult(obj.sh.pl.norm, -1);
+			n = obj.sh.pl.norm;
 		else if (obj.type == 2)
-			n = vec_new(0, 0, 1);
+			n = obj.sh.sq.norm;
 		else if (obj.type == 4)
 			n = triangle_norm(obj.sh.tr);
 		else if (obj.type == 3)
 			n = cylinder_norm(obj.sh.cy, hit.p);
-		//n = sphere_norm(s, pi);
-		double dt = vec_dot(vec_norm(l), vec_norm(n));
-		// addition de amb light
-		t_vec pix_col;
-		if (obj.type == 0)
-			pix_col = vec_mult(
-			vec_add(color_to_vec(obj.sh.sp.col),
-				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
-		if (obj.type == 1)
-			pix_col = vec_mult(
-			vec_add(color_to_vec(obj.sh.pl.col),
-				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
-		if (obj.type == 2)
-			pix_col = vec_mult(
-			vec_add(color_to_vec(obj.sh.sq.col),
-				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
-		if (obj.type == 4)
-			pix_col = vec_mult(
-			vec_add(color_to_vec(obj.sh.tr.col),
-				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
-		if (obj.type == 3)
-			pix_col = vec_mult(
-			vec_add(color_to_vec(obj.sh.cy.col),
-				vec_mult(color_to_vec(light.col), dt * light.bright)), rt->amb.range);
-		t_ray shadow;
-		double col_shadow = 1;
-		shadow.o = light.vec;
-		shadow.d = vec_norm(vec_sub(hit.p, light.vec));
-		if (intersect(rt, &hit, shadow, &obj) &&
-			hit.t + 1e-6 < vec_len(vec_sub(hit.p, light.vec)))
+		col = vec_mult_vec(color_get(obj), vec_mult(color_to_vec(rt->amb.col), rt->amb.range));
+		t_vec light_sum;
+		while (tmp)
 		{
-			//printf("HIT.T = %f, LEN = %f\n", hit.t, vec_len(vec_sub(hit.p, light.vec)));
-			col_shadow = 0.4;
+			double dt = vec_dot(vec_norm(vec_sub(tmp->vec, hit.p)), vec_norm(n));
+			light_sum = vec_mult(color_to_vec(tmp->col), dt * tmp->bright);
+			t_ray shadow;
+			shadow.o = tmp->vec;
+			shadow.d = vec_norm(vec_sub(hit.p, tmp->vec));
+			if (intersect(rt, &hit, shadow, &obj) &&
+			hit.t + 1e-6 < vec_len(vec_sub(hit.p, tmp->vec)))
+				light_sum = vec_new(0, 0, 0);
+			col = vec_clamp(vec_add(col, light_sum));
+			tmp = tmp->next;
 		}
-		return (vec_clamp(vec_mult(pix_col, col_shadow)));
-    }
+		return (col);
+	}
     t_vec unit_direction = unit_vector(ray.d);
     t = 0.5 * (unit_direction.y + 1.0);
     return vec_add(vec_mult(vec_new(1.0, 1.0, 1.0), 1.0 - t), vec_mult(vec_new(0.5, 0.7, 1.0), t));

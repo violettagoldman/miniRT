@@ -25,19 +25,19 @@ double	hit_sphere(t_sphere s, double min, double max, t_hit *hit, t_ray ray)
 		double temp = (-half_b - root) / a;
 		if (temp < max && temp > min)
 		{
-			hit->t = temp;
-			hit->p = vec_at(ray, hit->t);
 			t_vec norm = vec_div(vec_sub(hit->p, s.c), s.r);
 			*hit = face_norm(*hit, ray, norm);
+			hit->t = temp;
+			hit->p = vec_at(ray, hit->t);
 			return (1);
 		}
 		temp = (-half_b + root) / a;
 		if (temp < max && temp > min)
 		{
-			hit->t = temp;
-			hit->p = vec_at(ray, hit->t);
 			t_vec norm = vec_div(vec_sub(hit->p, s.c), s.r);
 			*hit = face_norm(*hit, ray, norm);
+			hit->t = temp;
+			hit->p = vec_at(ray, hit->t);
 			return (1);
 		}
 	}

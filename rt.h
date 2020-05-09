@@ -221,5 +221,12 @@ t_vec		triangle_norm(t_triangle tr);
 int			cylinder_hit(t_cylinder cy, double min, double max, t_hit *hit, t_ray ray);
 int			base_hit(t_cylinder cy, t_ray ray, double *dist, t_vec c, t_vec center);
 t_vec		cylinder_norm(t_cylinder cy, t_vec p);
+t_vec		rotation_x(t_vec vec, double x);
+t_vec		rotation_y(t_vec vec, double y);
+t_vec		rotation_z(t_vec vec, double z);
+t_vec		rotation(t_vec vec, t_vec angle);
+void		points(t_square sq, t_vec p[4]);
+t_vec		color_get(t_obj obj);
+t_vec		vec_mult_vec(t_vec a, t_vec b);
 
 #endif

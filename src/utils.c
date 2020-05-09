@@ -30,10 +30,22 @@ int			ft_atoi(char **str)
 double		ft_atof(char **s)
 {
  	int		integer;
- 	double	res;
+ 	int		sign;
+	double	res;
 
+	sign = 1;
+	while (**s == '\t' || **s == '\n' || **s == '\f' || **s == '\r' ||
+			**s == ' ' || **s == '\v' || **s == ',')
+		(*s)++;
+	if (**s == '-')
+	{
+		sign *= -1;
+		(*s)++;
+	}
+	else if (**s == '+')
+		(*s)++;
  	integer = ft_atoi(s);
- 	if (*s && **s == '.')
+	if (*s && **s == '.')
  	{
  		(*s)++;
  		res = (double)ft_atoi(s);
@@ -43,7 +55,7 @@ double		ft_atof(char **s)
  	while (res >= 1)
  		res /= 10;
  	res += integer;
- 	return (res);
+ 	return (res * sign);
 }
 
 double		degrees_to_radians(double degrees)

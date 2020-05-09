@@ -44,10 +44,10 @@ int		base_hit(t_cylinder cy, t_ray ray, double *dist, t_vec c, t_vec center)
 
 	radius = cy.d / 2;
 	t_vec norm = cylinder_norm(cy, c);
-	t_vec p = vec_new(ray.o.x - center.x, ray.o.y - center.y, ray.o.z - center.z);
-	double d = - (norm.x * (c.x - center.x) + norm.y * (c.y - center.y) + norm.z * (c.z - center.z));
+	t_vec p = vec_sub(ray.o, center);
+	double d = -(norm.x * (c.x - center.x) + norm.y * (c.y - center.y) + norm.z * (c.z - center.z));
 	double res = norm.x * ray.d.x + norm.y * ray.d.y + norm.z * ray.d.z;
-	if (!(res))
+	if (res == 0)
 		return (0);
 	double dist2 = - (norm.x * p.x + norm.y * p.y + norm.z * p.z + d) / res;
 	if (dist2 < 1e-6)
@@ -64,9 +64,10 @@ t_vec	cylinder_norm(t_cylinder cy, t_vec p)
 {
 	double radius;
 
+	cy.vec = vec_add(cy.vec, vec_mult(cy.norm, cy.h));
 	radius = cy.d / 2;
 	if (p.x < cy.vec.x + radius && p.x > cy.vec.x - radius &&
-		p.z < cy.vec.z + radius && p.z - radius)
+		p.z < cy.vec.z + radius && p.z > cy.vec.z - radius)
 	{
 		if (p.y < cy.vec.y + cy.h + 1e-6 && p.y > cy.vec.y + cy.h - 1e-6)
 			return (vec_new(0, 1, 0));
