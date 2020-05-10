@@ -9,12 +9,15 @@ void	camera_init(t_rt *rt)
 	t_vec		u;
 	t_vec		v;
 	t_vec		w;
+	int			i;
 
+	i = 0;
 	tmp = rt->c;
 	if (!tmp)
 		return ;
 	while (tmp)
 	{
+		tmp->nb = i;
 		tmp->from = tmp->vec;
 		tmp->up = vec_new(0, 1, 0);
 		tmp->at = vec_add(tmp->vec, tmp->norm);
@@ -33,10 +36,12 @@ void	camera_init(t_rt *rt)
 		tmp->horizontal = vec_mult(u, 2 * half_w);
 		tmp->vertical = vec_mult(v, 2 * half_h);
 		tmp = tmp->next;
+		i++;
 	}
+	rt->nb_cam = i;
 }
 
-/*void	camera_switch(t_rt *rt)
+void	camera_switch(t_rt *rt, int nb)
 {
 	t_camera *tmp;
 
@@ -44,6 +49,11 @@ void	camera_init(t_rt *rt)
 	while (tmp)
 	{
 		if (tmp->nb == nb)
-			current_camera = tmp->nb;
+		{
+			rt->current_cam = tmp;
+			return ;
+		}
+		else
+			tmp = tmp->next;
 	}
-}*/
+}

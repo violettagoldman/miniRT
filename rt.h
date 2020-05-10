@@ -137,6 +137,7 @@ typedef struct		s_camera
 	t_vec				from;
 	t_vec				at;
 	t_vec				up;
+	int					nb;
 	struct s_camera		*next;
 }					t_camera;
 
@@ -145,7 +146,8 @@ typedef struct		s_rt
 	t_res		res;
 	t_amb		amb;
 	t_camera	*c;
-	//t_camera	current_camera;
+	t_camera	*current_cam;
+	int			nb_cam;
 	t_light		*l;
 	t_obj		*obj;
 	t_window	window;
@@ -228,10 +230,12 @@ t_vec		color_get(t_obj obj);
 t_vec		vec_mult_vec(t_vec a, t_vec b);
 int			ft_strcmp(char *s1, char *s2);
 int			check_file_name(char *file);
-void		make_header(int fd, int w, int h);
-void		writedata(int w, int h, char **image_data, int fd);
-int			writebmp(int w, int h, char *image_data);
 t_window	window_init(t_rt *rt);
 t_vec		get_norm(t_obj obj, t_hit hit);
-
+void		camera_switch(t_rt *rt, int nb);
+int			get_pixel(t_window *window, unsigned int x, unsigned int y);
+void		int_to_char(int n, unsigned char *src);
+int			screenshot(t_rt *rt);
+void	bmp_pixels(t_rt *rt, int fd, int pad);
+void	bmp_header(t_rt *rt, int fd, int filesize);
 #endif

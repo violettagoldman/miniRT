@@ -34,7 +34,7 @@ $(NAME): ${MLX} ${OBJ} ${OBJ_GNL}
 	@${CC} ${CFLAGS} -c $< -o $@
 
 test: ${NAME} ${OBJ} ${OBJ_GNL} ${SRC_DIR}main.c
-	@./${NAME} scenes/shapes.rt
+	@./${NAME} scenes/sphere.rt
 
 run:
 	@./${NAME} $1

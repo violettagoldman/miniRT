@@ -12,7 +12,6 @@ t_vec ray_color(t_rt *rt, t_ray ray)
 	if (t > 0.0)
     {
 		n = get_norm(obj, hit);
-		
 		col = vec_mult_vec(color_get(obj), vec_mult(color_to_vec(rt->amb.col), rt->amb.range));
 		t_vec light_sum;
 		while (tmp)
@@ -48,7 +47,8 @@ void *render(void *arg)
 	rt = (t_rt *)((t_args *)arg)->rt;
     j = rt->window.h;
 	camera_init(rt);
-    cam = *(rt->c);
+	cam = *(rt->current_cam);
+
 	while (j > 0 && (i = ((t_args *)arg)->x) >= 0)
 	{
 		while (i < rt->window.w )

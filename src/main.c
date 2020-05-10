@@ -10,14 +10,14 @@ int main(int argc, char **argv)
 	{
 		init(&rt);
 		parse(argv[1], &rt);
+		camera_init(&rt);
+		rt.current_cam = rt.c;
 		check_parse(rt);
-		if (argc == 2)
-			window_init(&rt);
-		else if (argc == 3 && !ft_strcmp(argv[2], "--save"))
+		window_init(&rt);
+		/*if (argc == 3 && !ft_strcmp(argv[2], "--save"))
 		{
-			threads_init(&rt);
-			//writebmp(rt.window.h, rt.window.w, rt.window.image_data);
-		}
+			
+		}*/
 	}
 	else
 		error("Error\nToo many arguments");
