@@ -23,6 +23,12 @@ t_vec	vec_cross(t_vec a, t_vec b)
 	return vec_new(a.y * b.z - a.z * b.y, -(a.z * b.x - a.x * b.z), a.x * b.y - a.y * b.x);
 }
 
+t_vec	vec_cross2(t_vec a, t_vec b)
+{
+
+	return vec_new(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+}
+
 t_vec unit_vector(t_vec vec)
 {
     return (vec_div(vec, vec_len(vec)));

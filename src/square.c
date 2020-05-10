@@ -24,7 +24,6 @@ int		square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray)
 	t_vec ap = vec_sub(p, point[0]);
 	alpha = vec_dot(ap, ab) / vec_dot(ab, ab);
 	beta = vec_dot(ap, ac) / vec_dot(ac, ac);
-	//printf("A = %f, B = %f\n", alpha, beta);
 	hit->t = t;
 	hit->p = vec_at(ray, t);
 	if (alpha >= 0 && alpha <= 1 && beta >=  0 && beta <= 1)
@@ -37,12 +36,18 @@ void	points(t_square sq, t_vec p[4])
 	double	size;
 
 	size = sq.size / 2;
+	sq.norm = vec_norm(sq.norm);
 	p[0] = vec_new(size, size, 0);
 	p[1] = vec_new(-size, size, 0);
 	p[2] = vec_new(size, -size, 0);
 	p[3] = vec_new(-size, -size, 0);
+	/*p[0] = vec_add(rotation(p[0], sq.norm), sq.vec);
+	p[1] = vec_add(rotation(p[1], sq.norm), sq.vec);
+	p[2] = vec_add(rotation(p[2], sq.norm), sq.vec);
+	p[3] = vec_add(rotation(p[3], sq.norm), sq.vec);*/
 	p[0] = vec_add(rotation(p[0], sq.norm), sq.vec);
 	p[1] = vec_add(rotation(p[1], sq.norm), sq.vec);
 	p[2] = vec_add(rotation(p[2], sq.norm), sq.vec);
 	p[3] = vec_add(rotation(p[3], sq.norm), sq.vec);
+
 }

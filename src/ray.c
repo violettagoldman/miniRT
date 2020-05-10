@@ -5,6 +5,7 @@ t_ray ray_get(t_camera c, double u, double v)
 	return (
 		ray_new(
 			c.origin,
+			vec_norm(vec_sub(
 				vec_add(
 					c.lower_left_corner,
 					vec_add(
@@ -12,7 +13,10 @@ t_ray ray_get(t_camera c, double u, double v)
 						vec_mult(c.vertical, v)
 					)
 				)
-			));
+				, c.origin
+			))
+		)
+	);
 }
 
 t_ray ray_new(t_vec o, t_vec d)

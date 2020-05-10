@@ -194,6 +194,7 @@ double		vec_dot(t_vec a, t_vec b);
 t_vec		vec_norm(t_vec vec);
 t_vec		vec_new(double x, double y, double z);
 t_vec		vec_cross(t_vec a, t_vec b);
+t_vec		vec_cross2(t_vec a, t_vec b);
 t_vec		unit_vector(t_vec vec);
 double		vec_len(t_vec vec);
 void		create_window(t_window *window);

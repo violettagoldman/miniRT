@@ -30,9 +30,12 @@ t_vec ray_color(t_rt *rt, t_ray ray)
 			t_ray shadow;
 			shadow.o = tmp->vec;
 			shadow.d = vec_norm(vec_sub(hit.p, tmp->vec));
-			if (intersect(rt, &hit, shadow, &obj) &&
-			hit.t + 1e-6 < vec_len(vec_sub(hit.p, tmp->vec)))
+			t_hit a;
+			if (intersect(rt, &a, shadow, &obj) &&
+			a.t + 1e-6 < vec_len(vec_sub(hit.p, tmp->vec)))
+			{
 				light_sum = vec_new(0, 0, 0);
+			}
 			col = vec_clamp(vec_add(col, light_sum));
 			tmp = tmp->next;
 		}
@@ -62,6 +65,7 @@ void *render(void *arg)
               double u = (double)i / rt->window.w;
               double v = (double)j / rt->window.h;
 			  t_ray r = ray_get(cam, u, v);
+			  //vec_print(r.d);
               color = vec_add(color, ray_color(rt, r));
             put_pixel(rt->window, i, j, color);
             i += 16;
