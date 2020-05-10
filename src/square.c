@@ -12,10 +12,10 @@ int		square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray)
 	points(sq, point);
 	t_vec ab = vec_sub(point[1], point[0]);
 	t_vec ac = vec_sub(point[2], point[0]);
-	denom = - (vec_dot(sq.norm, sq.vec));
+	denom = -(vec_dot(sq.norm, sq.vec));
 	double calc = vec_dot(ray.o, sq.norm) + denom;
 	alpha = vec_dot(ray.d, sq.norm);
-	beta = - (calc / alpha);
+	beta = -(calc / alpha);
 	if (beta <= 0)
 		return (0);
 	double t = beta;
@@ -36,18 +36,12 @@ void	points(t_square sq, t_vec p[4])
 	double	size;
 
 	size = sq.size / 2;
-	sq.norm = vec_norm(sq.norm);
 	p[0] = vec_new(size, size, 0);
 	p[1] = vec_new(-size, size, 0);
 	p[2] = vec_new(size, -size, 0);
 	p[3] = vec_new(-size, -size, 0);
-	/*p[0] = vec_add(rotation(p[0], sq.norm), sq.vec);
-	p[1] = vec_add(rotation(p[1], sq.norm), sq.vec);
-	p[2] = vec_add(rotation(p[2], sq.norm), sq.vec);
-	p[3] = vec_add(rotation(p[3], sq.norm), sq.vec);*/
 	p[0] = vec_add(rotation(p[0], sq.norm), sq.vec);
 	p[1] = vec_add(rotation(p[1], sq.norm), sq.vec);
 	p[2] = vec_add(rotation(p[2], sq.norm), sq.vec);
 	p[3] = vec_add(rotation(p[3], sq.norm), sq.vec);
-
 }

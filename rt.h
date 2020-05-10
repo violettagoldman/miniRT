@@ -108,7 +108,7 @@ typedef struct		s_amb
 	t_color	col;
 }					t_amb;
 
-union			shape
+union				shape
 {
 	t_sphere	sp;
 	t_plane		pl;
@@ -126,7 +126,6 @@ typedef struct		s_obj
 
 typedef struct		s_camera
 {
-	// at = vec + norm
 	t_vec				vec;
 	t_vec				norm;
 	double				fov;
@@ -146,16 +145,17 @@ typedef struct		s_rt
 	t_res		res;
 	t_amb		amb;
 	t_camera	*c;
+	//t_camera	current_camera;
 	t_light		*l;
 	t_obj		*obj;
 	t_window	window;
 }									t_rt;
 
-typedef struct s_test
+typedef struct s_args
 {
-	int x;
-	t_rt *rt;
-}				t_test;
+	int		x;
+	t_rt	*rt;
+}				t_args;
 
 void		camera_init(t_rt *rt);
 double		ft_clamp(double x, double min, double max);
@@ -200,9 +200,7 @@ double		vec_len(t_vec vec);
 void		create_window(t_window *window);
 void		put_pixel(t_window window, int x, int y, t_vec color);
 int			display(t_rt *rt);
-t_window	window_init();
 void		*render(void *arg);
-t_window	smth();
 t_vec		vec_at(t_ray ray, double t);
 t_sphere	sphere_new(t_vec c, double r, t_color col);
 t_color		color_new(int r, int g, int b);
@@ -210,7 +208,6 @@ void		vec_print(t_vec vec);
 int			program_exited(void *rt);
 int			key_pressed(int key, t_rt *rt);
 double		intersect(t_rt *rt, t_hit *hit, t_ray ray, t_obj *obj);
-t_light		light_new(t_vec vec, double bright, t_color col);
 t_vec		color_to_vec(t_color col);
 t_vec		vec_clamp(t_vec col);
 int			square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray);
@@ -229,5 +226,12 @@ t_vec		rotation(t_vec vec, t_vec angle);
 void		points(t_square sq, t_vec p[4]);
 t_vec		color_get(t_obj obj);
 t_vec		vec_mult_vec(t_vec a, t_vec b);
+int			ft_strcmp(char *s1, char *s2);
+int			check_file_name(char *file);
+void		make_header(int fd, int w, int h);
+void		writedata(int w, int h, char **image_data, int fd);
+int			writebmp(int w, int h, char *image_data);
+t_window	window_init(t_rt *rt);
+t_vec		get_norm(t_obj obj, t_hit hit);
 
 #endif

@@ -35,3 +35,15 @@ void	camera_init(t_rt *rt)
 		tmp = tmp->next;
 	}
 }
+
+/*void	camera_switch(t_rt *rt)
+{
+	t_camera *tmp;
+
+	tmp = rt->c;
+	while (tmp)
+	{
+		if (tmp->nb == nb)
+			current_camera = tmp->nb;
+	}
+}*/

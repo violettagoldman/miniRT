@@ -52,13 +52,9 @@ void	add_camera(char *line, t_rt *rt)
 	c->next = NULL;
 	if (!check_bounds_vec(c->norm, -1, 1) || c->fov < 0 || c->fov > 180)
 		error("Error\nc: values are out of bounds");
-	if (!rt->c)
-		rt->c = c;
-	else
-	{
+	if (rt->c)
 		c->next = rt->c;
-		rt->c = c;
-	}
+	rt->c = c;
 }
 
 void	init(t_rt *rt)

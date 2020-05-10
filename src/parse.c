@@ -16,13 +16,9 @@ void send_to_obj(char *line, t_rt *rt)
 		 add_cylinder(line, obj);
 	else if (line[0] == 't' && line[1] == 'r' && line[2] == ' ')
 		 add_triangle(line, obj);
-	if (!rt->obj)
-		rt->obj = obj;
-	else
-	{
+	if (rt->obj)
 		obj->next = rt->obj;
-		rt->obj = obj;
-	}
+	rt->obj = obj;
 }
 
 void	send_to(char *line, t_rt *rt)
@@ -49,7 +45,7 @@ void	send_to(char *line, t_rt *rt)
 
 void	check_parse(t_rt rt)
 {
-	if ((rt.res.x == -1 && rt.res.y == -1) || (rt.amb.range == -1))
+	if ((rt.res.x == -1 && rt.res.y == -1) || rt.amb.range == -1)
 		error("Error\nEmpty or not correctly formated file");
 }
 
@@ -74,5 +70,6 @@ int		parse(char *file, t_rt *rt)
 		free(line);
 	}
 	free(line);
+	check_file_name(file);
 	return (0);
 }

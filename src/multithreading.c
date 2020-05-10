@@ -3,7 +3,7 @@
 int		threads_init(t_rt *rt)
 {
 	pthread_t		threads[16];
-	t_test			x[16];
+	t_args			x[16];
 	int				i;
 
 	i = -1;

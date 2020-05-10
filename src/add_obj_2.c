@@ -17,13 +17,9 @@ void	add_light(char *line, t_rt *rt)
 	l->next = NULL;
 	if (!check_bounds_col(l->col) || l->bright < 0 || l->bright > 1)
 		error("Error\nl: values are out of bounds");
-	if (!rt->l)
-		rt->l = l;
-	else
-	{
+	if (rt->l)
 		l->next = rt->l;
-		rt->l = l;
-	}
+	rt->l = l;
 }
 
 void	add_sphere(char *line, t_obj *obj)
