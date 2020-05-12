@@ -46,7 +46,6 @@ void *render(void *arg)
 
 	rt = (t_rt *)((t_args *)arg)->rt;
     j = rt->window.h;
-	camera_init(rt);
 	cam = *(rt->current_cam);
 
 	while (j > 0 && (i = ((t_args *)arg)->x) >= 0)
@@ -59,7 +58,7 @@ void *render(void *arg)
 			t_ray r = ray_get(cam, u, v);
 			color = vec_add(color, ray_color(rt, r));
 			put_pixel(rt->window, i, j, color);
-			i += 16;
+			i += THREADS;
 		}
 		--j;
 	}

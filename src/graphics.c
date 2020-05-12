@@ -44,7 +44,7 @@ t_window	window_init(t_rt *rt)
 	mlx_put_image_to_window(rt->window.mlx, rt->window.window, rt->window.image, 0, 0);
 	mlx_loop_hook(rt->window.mlx, &display, rt);
 	mlx_hook(rt->window.window, 2, 1L << 0, &key_pressed, rt);
-	//mlx_hook(rt->window.window, 3, 1L << 1, &key_released, rt);
+	mlx_mouse_hook(rt->window.window, &mouse_rotation, rt);
 	mlx_hook(rt->window.window, 17, 1L << 17, &program_exited, rt);
 	mlx_loop(rt->window.mlx);
 	return (rt->window);

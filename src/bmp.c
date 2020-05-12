@@ -20,11 +20,11 @@ void	bmp_header(t_rt *rt, int fd, int filesize)
 	write(fd, data, 54);
 }
 
-void	bmp_pixels(t_rt *rt, int fd, int pad)
+void	bmp_pixels(t_rt *rt, int fd, int padding)
 {
 	unsigned char	zero[3];
-	int	i;
-	int	j;
+	int				i;
+	int				j;
 	int				color;
 
 	i = -1;
@@ -40,7 +40,7 @@ void	bmp_pixels(t_rt *rt, int fd, int pad)
 			write(fd, &color, 3);
 			j++;
 		}
-		write(fd, &zero, pad);
+		write(fd, &zero, padding);
 		i++;
 	}
 }

@@ -37,6 +37,36 @@ int		key_pressed(int key, t_rt *rt)
 	return (0);
 }
 
+int		mouse_rotation(int b, int x, int y, t_rt *rt)
+{
+	t_camera *c;
+
+	(void)y;
+	c = rt->current_cam;
+	if (b == 1)
+	{
+		if (x > rt->window.w/2)
+		{
+			if (c->nb + 1 >= rt->nb_cam)
+				camera_switch(rt, 0);
+			else
+				camera_switch(rt, c->nb + 1);
+		}
+		else
+		{
+			if (c->nb - 1 <= 0)
+				camera_switch(rt, 0);
+			else
+				camera_switch(rt, c->nb - 1);
+		}
+	}
+	if (b == 4)
+		c->norm = rotation(c->norm, vec_new(0, -1, 0));
+	if (b == 5)
+		c->norm = rotation(c->norm, vec_new(0, 1, 0));
+	return (0);
+}
+
 
 int		program_exited(void *rt)
 {

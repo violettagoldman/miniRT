@@ -2,7 +2,7 @@
 
 int		square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray)
 {
-	(void)min;
+	/*(void)min;
 	(void)max;
 	double alpha;
 	double beta;
@@ -28,6 +28,23 @@ int		square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray)
 	hit->p = vec_at(ray, t);
 	if (alpha >= 0 && alpha <= 1 && beta >=  0 && beta <= 1)
 		return (1);
+	return (0);*/
+	//sq.norm = rotation(sq.norm, vec_new(rand() % 5, rand() % 5, rand() % 5));
+	double a = vec_dot(vec_sub(ray.o, sq.vec), sq.norm);
+	double b = vec_dot(ray.d, sq.norm);
+	if (fabs(b) < 1e-6 || (a < 0 && b < 0) || (a > 0 && b > 0))
+		return (0);
+	double t1 = -a / b;
+	t_vec d = vec_sub(vec_add(vec_mult(ray.d, t1), ray.o), sq.vec);
+	double t2 = sq.size / 2;
+	if (fabs(d.x) > t2 || fabs(d.y) > t2 || fabs(d.z) > t2)
+		return (0);
+	if (t1 > min && t1 < max)
+	{
+		hit->t = t1;
+		hit->p = vec_at(ray, hit->t);
+		return (1);
+	}
 	return (0);
 }
 

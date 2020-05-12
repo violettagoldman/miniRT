@@ -10,7 +10,7 @@
 # include "./src/get_next_line/get_next_line.h"
 # include "./minilibx/elcapitan/mlx.h"
 # define PI 3.1415926535897932385
-
+# define THREADS 8
 typedef struct		s_vec
 {
 	double	x;
@@ -238,4 +238,6 @@ void		int_to_char(int n, unsigned char *src);
 int			screenshot(t_rt *rt);
 void	bmp_pixels(t_rt *rt, int fd, int pad);
 void	bmp_header(t_rt *rt, int fd, int filesize);
+int		mouse_rotation(int b, int x, int y, t_rt *rt);
+
 #endif
