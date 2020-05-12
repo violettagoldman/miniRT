@@ -5,17 +5,17 @@ void send_to_obj(char *line, t_rt *rt)
 	t_obj		*obj;
 
 	if (!(obj = (t_obj *)malloc(sizeof(t_obj))))
-		error("Error\nmalloc");
+		error("Error\nmalloc", rt);
 	if (line[0] == 's' && line[1] == 'p' && line[2] == ' ')
-		add_sphere(line, obj);
+		add_sphere(line, obj, rt);
 	else if (line[0] == 'p' && line[1] == 'l' && line[2] == ' ')
-		add_plane(line, obj);
+		add_plane(line, obj, rt);
 	else if (line[0] == 's' && line[1] == 'q' && line[2] == ' ')
-		 add_square(line, obj);
+		 add_square(line, obj, rt);
 	else if (line[0] == 'c' && line[1] == 'y' && line[2] == ' ')
-		 add_cylinder(line, obj);
+		 add_cylinder(line, obj, rt);
 	else if (line[0] == 't' && line[1] == 'r' && line[2] == ' ')
-		 add_triangle(line, obj);
+		 add_triangle(line, obj, rt);
 	if (rt->obj)
 		obj->next = rt->obj;
 	rt->obj = obj;
@@ -26,7 +26,7 @@ void	send_to(char *line, t_rt *rt)
 	t_obj		*obj;
 
 	if (!(obj = (t_obj *)malloc(sizeof(t_obj))))
-		error("Error\nsp: malloc");
+		error("Error\nsp: malloc", rt);
 	if (line[0] == 'R' && spaces(line[1]))
 		add_res(line, rt);
 	else if (line[0] == 'A' && spaces(line[1]))
@@ -46,7 +46,7 @@ void	send_to(char *line, t_rt *rt)
 void	check_parse(t_rt rt)
 {
 	if ((rt.res.x == -1 && rt.res.y == -1) || rt.amb.range == -1)
-		error("Error\nEmpty or not correctly formated file");
+		error("Error\nEmpty or not correctly formated file", &rt);
 }
 
 int		spaces(char c)
@@ -70,6 +70,6 @@ int		parse(char *file, t_rt *rt)
 		free(line);
 	}
 	free(line);
-	check_file_name(file);
+	check_file_name(file, rt);
 	return (0);
 }

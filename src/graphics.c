@@ -1,6 +1,6 @@
 #include "../rt.h"
 
-void		create_window(t_window *window)
+void		create_window(t_window *window, t_rt *rt)
 {
 	int	bits_pixel;
 	int	line_size;
@@ -10,7 +10,8 @@ void		create_window(t_window *window)
 	line_size = 4 * window->w;
 	endian = 0;
 	window->mlx = mlx_init();
-	window->window = mlx_new_window(window->mlx, window->w, window->h,
+	if (rt->save == 0)
+		window->window = mlx_new_window(window->mlx, window->w, window->h,
 	"miniRT by Violetta Goldman");
 	window->image = mlx_new_image(window->mlx, window->w, window->h);
 	window->image_data = mlx_get_data_addr(window->image, &bits_pixel,
@@ -40,12 +41,16 @@ int			display(t_rt *rt)
 
 t_window	window_init(t_rt *rt)
 {
-	create_window(&rt->window);
-	mlx_put_image_to_window(rt->window.mlx, rt->window.window, rt->window.image, 0, 0);
+	create_window(&rt->window, rt);
+	if (rt->save == 0)
+	{
+		mlx_put_image_to_window(rt->window.mlx, rt->window.window, rt->window.image, 0, 0);
+		mlx_hook(rt->window.window, 2, 1L << 0, &key_pressed, rt);
+		mlx_mouse_hook(rt->window.window, &mouse_rotation, rt);
+		mlx_hook(rt->window.window, 17, 1L << 17, &program_exited, rt);
+	}
+
 	mlx_loop_hook(rt->window.mlx, &display, rt);
-	mlx_hook(rt->window.window, 2, 1L << 0, &key_pressed, rt);
-	mlx_mouse_hook(rt->window.window, &mouse_rotation, rt);
-	mlx_hook(rt->window.window, 17, 1L << 17, &program_exited, rt);
 	mlx_loop(rt->window.mlx);
 	return (rt->window);
 }

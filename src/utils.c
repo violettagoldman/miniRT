@@ -1,6 +1,6 @@
 #include "../rt.h"
 
-int			ft_atoi(char **str)
+int			ft_atoi(char **str, t_rt *rt)
 {
 	int		sign;
 	int		res;
@@ -18,7 +18,7 @@ int			ft_atoi(char **str)
 	else if (**str == '+')
 		(*str)++;
 	if (!(**str >= '0' && **str <= '9'))
-		error("Error\nBadly formated file");
+		error("Error\nBadly formated file", rt);
 	while (**str && **str >= '0' && **str <= '9')
 	{
 		res = (res * 10) + (**str - '0');
@@ -27,7 +27,7 @@ int			ft_atoi(char **str)
 	return (res * sign);
 }
 
-double		ft_atof(char **s)
+double		ft_atof(char **s, t_rt *rt)
 {
  	int		integer;
  	int		sign;
@@ -44,11 +44,11 @@ double		ft_atof(char **s)
 	}
 	else if (**s == '+')
 		(*s)++;
- 	integer = ft_atoi(s);
+ 	integer = ft_atoi(s, rt);
 	if (*s && **s == '.')
  	{
  		(*s)++;
- 		res = (double)ft_atoi(s);
+ 		res = (double)ft_atoi(s, rt);
  	}
  	else
  		res = 0;

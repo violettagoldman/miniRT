@@ -70,8 +70,6 @@ int		mouse_rotation(int b, int x, int y, t_rt *rt)
 
 int		program_exited(void *rt)
 {
-	(void)rt;
-	//stop_game((t_game *)game);
+	free_rt(rt);
 	exit(0);
-	//return(0);
 }

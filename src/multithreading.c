@@ -23,5 +23,10 @@ int		threads_init(t_rt *rt)
 	pthread_attr_destroy(&attr);
 	while (++i < THREADS)
 		pthread_join(threads[i], NULL);
+	if (rt->save == 1)
+	{
+		screenshot(rt);
+		program_exited(rt);
+	}
 	return (1);
 }
