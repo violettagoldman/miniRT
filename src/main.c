@@ -25,5 +25,5 @@ int		main(int argc, char **argv)
 	}
 	else
 		error("Error\nToo many arguments", &rt);
-    return (0);
+	return (0);
 }

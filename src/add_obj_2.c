@@ -65,7 +65,7 @@ int		check_bounds_col(t_color col)
 	min = 0;
 	max = 255;
 	if (col.r < min || col.r > max || col.g < min || col.g > max
-		|| col.b < min|| col.b > max)
+		|| col.b < min || col.b > max)
 		return (0);
 	return (1);
 }

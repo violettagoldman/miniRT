@@ -30,7 +30,7 @@ t_vec		vec_clamp(t_vec col)
 	return (vec);
 }
 
-t_vec	color_get(t_obj obj)
+t_vec		color_get(t_obj obj)
 {
 	if (obj.type == 0)
 		return (color_to_vec(obj.sh.sp.col));
@@ -43,4 +43,3 @@ t_vec	color_get(t_obj obj)
 	else
 		return (color_to_vec(obj.sh.tr.col));
 }
-

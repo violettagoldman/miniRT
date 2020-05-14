@@ -20,4 +20,4 @@ int	plane_hit(t_plane p, double min, double max, t_hit *hit, t_ray ray)
 		}
 	}
 	return (0);
-}
+}I

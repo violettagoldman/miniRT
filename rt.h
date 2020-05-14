@@ -9,122 +9,124 @@
 # include <pthread.h>
 # include "./src/get_next_line/get_next_line.h"
 # include "./minilibx/elcapitan/mlx.h"
+
 # define PI 3.1415926535897932385
 # define THREADS 8
-typedef struct		s_vec
-{
-	double	x;
-	double	y;
-	double	z;
-}					t_vec;
 
-typedef struct		s_color
+typedef struct			s_vec
 {
-	int r;
-	int g;
-	int b;
-}					t_color;
+	double				x;
+	double				y;
+	double				z;
+}						t_vec;
 
-typedef struct		s_ray
+typedef struct			s_color
 {
-	t_vec o;
-	t_vec d;
-}					t_ray;
+	int					r;
+	int					g;
+	int					b;
+}						t_color;
 
-typedef struct		s_plane
+typedef struct			s_ray
 {
-	t_vec	vec;
-	t_vec	norm;
-	t_color	col;
-}					t_plane;
+	t_vec				o;
+	t_vec				d;
+}						t_ray;
 
-typedef struct		s_sphere
+typedef struct			s_plane
 {
-	t_vec			c;
-	double			r;
-	t_color			col;
-}					t_sphere;
+	t_vec				vec;
+	t_vec				norm;
+	t_color				col;
+}						t_plane;
 
-typedef struct		s_square
+typedef struct			s_sphere
 {
-	t_vec	vec;
-	t_vec	norm;
-	double	size;
-	t_color	col;
-}					t_square;
+	t_vec				c;
+	double				r;
+	t_color				col;
+}						t_sphere;
 
-typedef struct		s_triangle
+typedef struct			s_square
 {
-	t_vec	first;
-	t_vec	second;
-	t_vec	third;
-	t_color	col;
-}					t_triangle;
+	t_vec				vec;
+	t_vec				norm;
+	double				size;
+	t_color				col;
+}						t_square;
 
-typedef struct		s_cylinder
+typedef struct			s_triangle
 {
-	t_vec	vec;
-	t_vec	norm;
-	double	d;
-	double	h;
-	t_color	col;
-}					t_cylinder;
+	t_vec				first;
+	t_vec				second;
+	t_vec				third;
+	t_color				col;
+}						t_triangle;
 
-typedef struct		s_window
+typedef struct			s_cylinder
 {
-	int		w;
-	int		h;
-	void	*mlx;
-	void	*window;
-	void	*image;
-	char	*image_data;
-}					t_window;
+	t_vec				vec;
+	t_vec				norm;
+	double				d;
+	double				h;
+	t_color				col;
+}						t_cylinder;
 
-typedef struct		s_hit
+typedef struct			s_window
 {
-    t_vec	p;
-    t_vec	norm;
-    double	t;
-    int		front;
-}					t_hit;
+	int					w;
+	int					h;
+	void				*mlx;
+	void				*window;
+	void				*image;
+	char				*image_data;
+}						t_window;
 
-typedef struct		s_light
+typedef struct			s_hit
 {
-	t_vec			vec;
-	double			bright;
-	t_color			col;
-	struct s_light	*next;
-}					t_light;
+	t_vec				p;
+	t_vec				norm;
+	double				t;
+	int					front;
+}						t_hit;
 
-typedef struct		s_res
+typedef struct			s_light
 {
-	int x;
-	int y;
-}					t_res;
+	t_vec				vec;
+	double				bright;
+	t_color				col;
+	struct s_light		*next;
+}						t_light;
 
-typedef struct		s_amb
+typedef struct			s_res
 {
-	double	range;
-	t_color	col;
-}					t_amb;
+	int					x;
+	int					y;
+}						t_res;
 
-union				shape
+typedef struct			s_amb
 {
-	t_sphere	sp;
-	t_plane		pl;
-	t_square	sq;
-	t_cylinder	cy;
-	t_triangle	tr;
+	double				range;
+	t_color				col;
+}						t_amb;
+
+union					u_shape
+{
+	t_sphere			sp;
+	t_plane				pl;
+	t_square			sq;
+	t_cylinder			cy;
+	t_triangle			tr;
 };
 
-typedef struct		s_obj
+typedef struct			s_obj
 {
-	int				type;
-	union shape		sh;
-	struct s_obj	*next;
-}					t_obj;
+	int					type;
+	union u_shape		sh;
+	struct s_obj		*next;
+}						t_obj;
 
-typedef struct		s_camera
+typedef struct			s_camera
 {
 	t_vec				vec;
 	t_vec				norm;
@@ -139,26 +141,26 @@ typedef struct		s_camera
 	t_vec				up;
 	int					nb;
 	struct s_camera		*next;
-}					t_camera;
+}						t_camera;
 
-typedef struct		s_rt
+typedef struct			s_rt
 {
-	t_res		res;
-	t_amb		amb;
-	t_camera	*c;
-	t_camera	*current_cam;
-	int			nb_cam;
-	int			save;
-	t_light		*l;
-	t_obj		*obj;
-	t_window	window;
-}									t_rt;
+	t_res				res;
+	t_amb				amb;
+	t_camera			*c;
+	t_camera			*current_cam;
+	int					nb_cam;
+	int					save;
+	t_light				*l;
+	t_obj				*obj;
+	t_window			window;
+}						t_rt;
 
-typedef struct s_args
+typedef struct			s_args
 {
-	int		x;
-	t_rt	*rt;
-}				t_args;
+	int					x;
+	t_rt				*rt;
+}						t_args;
 
 void		camera_init(t_rt *rt);
 double		ft_clamp(double x, double min, double max);
@@ -187,7 +189,8 @@ t_ray		ray_get(t_camera c, double u, double v);
 t_ray		ray_new(t_vec o, t_vec d);
 t_vec		ray_color(t_rt *rt, t_ray ray);
 t_vec		sphere_norm(t_sphere s, t_vec pi);
-double		hit_sphere(t_sphere s, double min, double max, t_hit *hit, t_ray ray);
+double		hit_sphere(t_sphere s, double min, double max, t_hit *hit,
+			t_ray ray);
 t_sphere	*create_sphere(t_vec c, double r, t_color color);
 t_vec		vec_add(t_vec a, t_vec b);
 t_vec		vec_sub(t_vec a, t_vec b);
@@ -213,14 +216,20 @@ int			key_pressed(int key, t_rt *rt);
 double		intersect(t_rt *rt, t_hit *hit, t_ray ray, t_obj *obj);
 t_vec		color_to_vec(t_color col);
 t_vec		vec_clamp(t_vec col);
-int			square_hit(t_square sq, double min, double max, t_hit *hit, t_ray ray);
-int			plane_hit(t_plane p, double min, double max, t_hit *hit, t_ray ray);
-double		hit_get(t_obj *obj, double min, double closest, t_hit *hit, t_ray ray);
+int			square_hit(t_square sq, double min, double max, t_hit *hit,
+			t_ray ray);
+int			plane_hit(t_plane p, double min, double max, t_hit *hit,
+			t_ray ray);
+double		hit_get(t_obj *obj, double min, double closest, t_hit *hit,
+			t_ray ray);
 int			threads_init(t_rt *rt);
-int			triangle_hit(t_triangle tr, double min, double max, t_hit *hit, t_ray ray);
+int			triangle_hit(t_triangle tr, double min, double max, t_hit *hit,
+			t_ray ray);
 t_vec		triangle_norm(t_triangle tr);
-int			cylinder_hit(t_cylinder cy, double min, double max, t_hit *hit, t_ray ray);
-int			base_hit(t_cylinder cy, t_ray ray, double *dist, t_vec c, t_vec center);
+int			cylinder_hit(t_cylinder cy, double min, double max, t_hit *hit,
+			t_ray ray);
+int			base_hit(t_cylinder cy, t_ray ray, double *dist, t_vec c,
+			t_vec center);
 t_vec		cylinder_norm(t_cylinder cy, t_vec p);
 t_vec		rotation_x(t_vec vec, double x);
 t_vec		rotation_y(t_vec vec, double y);

@@ -45,7 +45,7 @@ void	bmp_pixels(t_rt *rt, int fd, int padding)
 	}
 }
 
-int			screenshot(t_rt *rt)
+int		screenshot(t_rt *rt)
 {
 	int			fd;
 	int			filesize;
@@ -53,7 +53,7 @@ int			screenshot(t_rt *rt)
 
 	pad = (4 - (rt->window.w * 3) % 4) % 4;
 	filesize = 54 + ((3 * rt->window.w + pad) * rt->window.h);
-	if ((fd = open("screenshot.bmp", O_WRONLY | O_CREAT |
+	if ((fd = open("picture.bmp", O_WRONLY | O_CREAT |
 					O_TRUNC | O_APPEND, 0666)) < 0)
 		return (0);
 	bmp_header(rt, fd, filesize);

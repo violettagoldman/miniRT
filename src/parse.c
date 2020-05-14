@@ -1,6 +1,6 @@
 # include "../rt.h"
 
-void send_to_obj(char *line, t_rt *rt)
+void	send_to_obj(char *line, t_rt *rt)
 {
 	t_obj		*obj;
 
@@ -11,11 +11,11 @@ void send_to_obj(char *line, t_rt *rt)
 	else if (line[0] == 'p' && line[1] == 'l' && line[2] == ' ')
 		add_plane(line, obj, rt);
 	else if (line[0] == 's' && line[1] == 'q' && line[2] == ' ')
-		 add_square(line, obj, rt);
+		add_square(line, obj, rt);
 	else if (line[0] == 'c' && line[1] == 'y' && line[2] == ' ')
-		 add_cylinder(line, obj, rt);
+		add_cylinder(line, obj, rt);
 	else if (line[0] == 't' && line[1] == 'r' && line[2] == ' ')
-		 add_triangle(line, obj, rt);
+		add_triangle(line, obj, rt);
 	if (rt->obj)
 		obj->next = rt->obj;
 	rt->obj = obj;
@@ -59,9 +59,9 @@ int		spaces(char c)
 
 int		parse(char *file, t_rt *rt)
 {
-	int fd;
-	int status;
-	char *line;
+	int		fd;
+	int		status;
+	char	*line;
 
 	fd = open(file, O_RDONLY);
 	while ((status = get_next_line(fd, &line)) > 0)

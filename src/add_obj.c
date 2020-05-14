@@ -26,7 +26,7 @@ void	add_amb(char *line, t_rt *rt)
 	col.r = ft_atoi(&line, rt);
 	col.g = ft_atoi(&line, rt);
 	col.b = ft_atoi(&line, rt);
-	if (!check_bounds_col(col) || amb < 0.0 || amb > 1.0 
+	if (!check_bounds_col(col) || amb < 0.0 || amb > 1.0
 		|| rt->amb.range != -1)
 		error("Error\nA: already exists or values are out of bounds", rt);
 	rt->amb.range = amb;
@@ -72,7 +72,7 @@ void	init(t_rt *rt)
 int		check_bounds_vec(t_vec vec, int min, int max)
 {
 	if (vec.x < min || vec.x > max || vec.y < min || vec.y > max
-		|| vec.z < min|| vec.x > max)
+		|| vec.z < min || vec.x > max)
 		return (0);
 	return (1);
 }

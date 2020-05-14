@@ -44,13 +44,13 @@ t_window	window_init(t_rt *rt)
 	create_window(&rt->window, rt);
 	if (rt->save == 0)
 	{
-		mlx_put_image_to_window(rt->window.mlx, rt->window.window, rt->window.image, 0, 0);
+		mlx_put_image_to_window(rt->window.mlx, rt->window.window,
+		rt->window.image, 0, 0);
 		mlx_hook(rt->window.window, 2, 1L << 0, &key_pressed, rt);
 		mlx_mouse_hook(rt->window.window, &mouse_rotation, rt);
 		mlx_hook(rt->window.window, 17, 1L << 17, &program_exited, rt);
 	}
-
-	mlx_loop_hook(rt->window.mlx, &display, rt);
-	mlx_loop(rt->window.mlx);
+		mlx_loop_hook(rt->window.mlx, &display, rt);
+		mlx_loop(rt->window.mlx);
 	return (rt->window);
 }
