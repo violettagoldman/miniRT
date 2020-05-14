@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:52:07 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:52:08 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 18:38:19 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_vec		rotation_y(t_vec vec, double y)
 	y = degrees_to_radians(y);
 	res.x = vec.x * cos(y) + vec.z * sin(y);
 	res.y = vec.y;
-	res.z = vec.x * - sin(y) + vec.z * cos(y);
+	res.z = vec.x * -sin(y) + vec.z * cos(y);
 	return (res);
 }
 

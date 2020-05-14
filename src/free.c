@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:49:26 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:49:28 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 16:59:02 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		free_rt(t_rt *rt)
 	t_light		*light;
 	t_camera	*camera;
 	void		*tmp;
-	
+
 	light = rt->l;
 	camera = rt->c;
 	while (light)

@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:53:32 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 13:15:55 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 19:46:55 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ int		key_pressed(int key, t_rt *rt)
 {
 	t_camera	*c;
 
-	printf("%d\n", key);
 	c = rt->current_cam;
 	if (key == (LINUX ? 65362 : 126))
-		c->vec = vec_add(c->vec, vec_mult(vec_cross(c->vertical, c->horizontal), 0.08));
+		c->vec = vec_add(c->vec, vec_mult(vec_cross(c->vertical,
+			c->horizontal), 0.08));
 	if (key == (LINUX ? 65364 : 125))
-		c->vec = vec_add(c->vec, vec_mult(vec_cross(c->vertical, c->horizontal), -0.08));
+		c->vec = vec_add(c->vec, vec_mult(vec_cross(c->vertical,
+			c->horizontal), -0.08));
 	if (key == (LINUX ? 65363 : 124))
 		c->vec = vec_add(c->vec, vec_mult(c->horizontal, 0.08));
 	if (key == (LINUX ? 65361 : 123))
@@ -32,6 +33,15 @@ int		key_pressed(int key, t_rt *rt)
 		c->norm = rotation(c->norm, vec_new(0, -1, 0));
 	if (key == (LINUX ? 100 : 2))
 		c->norm = rotation(c->norm, vec_new(0, 1, 0));
+	key_pressed_help(key, rt);
+	return (0);
+}
+
+void	key_pressed_help(int key, t_rt *rt)
+{
+	t_camera	*c;
+
+	c = rt->current_cam;
 	if (key == (LINUX ? 120 : 7))
 	{
 		if (c->nb - 1 <= 0)
@@ -46,19 +56,16 @@ int		key_pressed(int key, t_rt *rt)
 		else
 			camera_switch(rt, c->nb + 1);
 	}
-
-	return (0);
 }
 
 int		mouse_rotation(int b, int x, int y, t_rt *rt)
 {
 	t_camera *c;
 
-	(void)y;
 	c = rt->current_cam;
-	if (b == 1)
+	if (b == 1 && (y = 1))
 	{
-		if (x > rt->window.w/2)
+		if (x > rt->window.w / 2)
 		{
 			if (c->nb + 1 >= rt->nb_cam)
 				camera_switch(rt, 0);
@@ -79,7 +86,6 @@ int		mouse_rotation(int b, int x, int y, t_rt *rt)
 		c->norm = rotation(c->norm, vec_new(0, 1, 0));
 	return (0);
 }
-
 
 int		program_exited(void *rt)
 {

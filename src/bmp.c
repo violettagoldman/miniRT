@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:48:45 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 14:56:47 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 18:17:22 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int		screenshot(t_rt *rt)
 	bmp_header(rt, fd, filesize);
 	bmp_pixels(rt, fd, pad);
 	close(fd);
+	program_exited(rt);
 	return (1);
 }
 

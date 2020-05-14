@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:51:22 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:51:23 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 15:19:47 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_ray	ray_get(t_camera c, double u, double v)
 {
 	return (ray_new(c.origin, vec_norm(vec_sub(vec_add(c.lower_left_corner,
-				vec_add(vec_mult(c.horizontal, u),vec_mult(c.vertical, v))),
+				vec_add(vec_mult(c.horizontal, u), vec_mult(c.vertical, v))),
 				c.origin))));
 }
 

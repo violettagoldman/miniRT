@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:52:15 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:52:16 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 19:07:57 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,28 @@ t_sphere	*create_sphere(t_vec c, double r, t_color color)
 	return (sphere);
 }
 
-double	hit_sphere(t_sphere s, double min, double max, t_hit *hit, t_ray ray)
+double		hit_sphere(t_sphere s, t_params params)
 {
-	t_vec oc = vec_sub(ray.o, s.c);
-	double a = vec_dot(ray.d, ray.d);
-	double half_b = vec_dot(oc, ray.d);
-	double c = vec_dot(oc, oc) - s.r * s.r;
-	double discriminant = half_b * half_b - a * c;
-	if (discriminant > 0)
+	t_hs	hs;
+
+	hs.oc = vec_sub(params.ray.o, s.c);
+	hs.a = vec_dot(params.ray.d, params.ray.d);
+	hs.half_b = vec_dot(hs.oc, params.ray.d);
+	hs.c = vec_dot(hs.oc, hs.oc) - s.r * s.r;
+	hs.discriminant = hs.half_b * hs.half_b - hs.a * hs.c;
+	if (hs.discriminant > 0)
 	{
-		double root = sqrt(discriminant);
-		double temp = (-half_b - root) / a;
-		if (temp < max && temp > min)
+		hs.root = sqrt(hs.discriminant);
+		hs.temp = (-hs.half_b - hs.root) / hs.a;
+		if (hs.temp < params.max && hs.temp > params.min)
 		{
-			t_vec norm = vec_div(vec_sub(hit->p, s.c), s.r);
-			*hit = face_norm(*hit, ray, norm);
-			hit->t = temp;
-			hit->p = vec_at(ray, hit->t);
+			hit_sphere_helper(s, &params, &hs);
 			return (1);
 		}
-		temp = (-half_b + root) / a;
-		if (temp < max && temp > min)
+		hs.temp = (-hs.half_b + hs.root) / hs.a;
+		if (hs.temp < params.max && hs.temp > params.min)
 		{
-			t_vec norm = vec_div(vec_sub(hit->p, s.c), s.r);
-			*hit = face_norm(*hit, ray, norm);
-			hit->t = temp;
-			hit->p = vec_at(ray, hit->t);
+			hit_sphere_helper(s, &params, &hs);
 			return (1);
 		}
 	}
@@ -66,7 +62,7 @@ t_sphere	sphere_new(t_vec c, double r, t_color col)
 	return (s);
 }
 
-t_vec	sphere_norm(t_sphere s, t_vec pi)
+t_vec		sphere_norm(t_sphere s, t_vec pi)
 {
 	t_vec res;
 

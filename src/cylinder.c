@@ -6,13 +6,13 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:49:10 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:49:12 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 16:59:37 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../rt.h"
 
-t_vec		cylinder_norm(t_cylinder cy, t_vec p)
+t_vec			cylinder_norm(t_cylinder cy, t_vec p)
 {
 	t_vec	norm;
 	t_vec	axe;
@@ -47,8 +47,7 @@ static double	sqr(double x)
 	return (x * x);
 }
 
-int			cylinder_hit(t_cylinder cy, double min, double max, t_hit *hit,
-			t_ray ray)
+int				cylinder_hit(t_cylinder cy, t_params par)
 {
 	t_vec		x;
 	double		a;
@@ -57,16 +56,17 @@ int			cylinder_hit(t_cylinder cy, double min, double max, t_hit *hit,
 	double		r;
 
 	r = cy.d / 2;
-	x = vec_sub(ray.o, cy.vec);
-	a = vec_dot(ray.d, ray.d) - sqr(vec_dot(ray.d, cy.norm));
-	b = 2 * (vec_dot(ray.d, x) - vec_dot(ray.d, cy.norm) * vec_dot(x, cy.norm));
+	x = vec_sub(par.ray.o, cy.vec);
+	a = vec_dot(par.ray.d, par.ray.d) - sqr(vec_dot(par.ray.d, cy.norm));
+	b = 2 * (vec_dot(par.ray.d, x) - vec_dot(par.ray.d, cy.norm) *
+		vec_dot(x, cy.norm));
 	d = vec_dot(x, x) - sqr(vec_dot(x, cy.norm)) - r * r;
 	d = b * b - 4 * a * d;
 	d = (fabs(d) < 1e-6) ? 0 :
-	get_t((-b - sqrt(d)) / (2 * a), (-b + sqrt(d)) / (2 * a), cy, ray);
-	if (!(d > min && d < max))
+	get_t((-b - sqrt(d)) / (2 * a), (-b + sqrt(d)) / (2 * a), cy, par.ray);
+	if (!(d > par.min && d < par.max))
 		return (0);
-	hit->t = d;
-	hit->p = vec_add(ray.o, vec_mult(ray.d, d));
+	par.hit->t = d;
+	par.hit->p = vec_add(par.ray.o, vec_mult(par.ray.d, d));
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:49:54 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:49:56 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 18:17:36 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ int		threads_init(t_rt *rt)
 	while (++i < THREADS)
 		pthread_join(threads[i], NULL);
 	if (rt->save == 1)
-	{
 		screenshot(rt);
-		program_exited(rt);
-	}
 	return (1);
 }

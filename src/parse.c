@@ -6,11 +6,11 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:51:06 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:51:07 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 18:40:10 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../rt.h"
+#include "../rt.h"
 
 void	send_to_obj(char *line, t_rt *rt)
 {
@@ -52,7 +52,7 @@ void	send_to(char *line, t_rt *rt)
 			(line[0] == 's' && line[1] == 'q' && spaces(line[2])) ||
 			(line[0] == 'c' && line[1] == 'y' && spaces(line[2])) ||
 			(line[0] == 't' && line[1] == 'r' && spaces(line[2])))
-			send_to_obj(line, rt);
+		send_to_obj(line, rt);
 }
 
 void	check_parse(t_rt rt)

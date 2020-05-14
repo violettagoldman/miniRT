@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:49:37 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:49:38 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 17:53:00 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_window	window_init(t_rt *rt)
 		mlx_mouse_hook(rt->window.window, &mouse_rotation, rt);
 		mlx_hook(rt->window.window, 17, 1L << 17, &program_exited, rt);
 	}
-		mlx_loop_hook(rt->window.mlx, &display, rt);
-		mlx_loop(rt->window.mlx);
+	mlx_loop_hook(rt->window.mlx, &display, rt);
+	mlx_loop(rt->window.mlx);
 	return (rt->window);
 }
