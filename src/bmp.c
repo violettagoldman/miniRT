@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:48:45 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 18:17:22 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 21:20:37 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	bmp_header(t_rt *rt, int fd, int filesize)
 	data[10] = (unsigned char)(54);
 	data[14] = (unsigned char)(40);
 	int_to_char((unsigned int)rt->window.w, data + 18);
-	int_to_char((unsigned int)rt->window.h, data + 22);
+	int_to_char((unsigned int)rt->window.h - 1, data + 22);
 	data[26] = (unsigned char)(1);
 	data[28] = (unsigned char)(24);
 	write(fd, data, 54);

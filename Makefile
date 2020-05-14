@@ -3,14 +3,15 @@ CFLAGS = -Wall -Wextra -Werror -Ofast -flto -march=native
 ifeq ($(D), 1)
     CFLAGS += -g3 -fsanitize=address
 endif
-GREEN = 
 OS = $(shell uname -s)
 ifeq ($(OS), Linux)
+	TICK = \342\234\224
 	CC = clang
 	MLXFLAGS = -lm -lbsd -lXext -lX11 -Lminilibx_linux -lmlx_Linux -pthread -D LINUX=1
 	MLX = ./minilibx/libmlx.a
 	MLX_DIR = ./minilibx_linux/
 else
+	TICK = \xE2\x9C\x94
 	CC = gcc
 	MLXFLAGS = -framework OpenGL -framework AppKit -Lminilibx -lmlx -D LINUX=0
 	MLX = ./minilibx/libmlx.a
@@ -32,7 +33,7 @@ $(MLX):
 
 $(NAME): ${MLX} ${OBJ} ${OBJ_GNL}
 	@${CC} ${OBJ} ${OBJ_GNL} ${CFLAGS} ${MLXFLAGS} -o ${NAME}
-	@echo "\033[32;1mminiRT by Violetta Goldman is done \342\234\224\033[0m          "
+	@echo "\033[32;1mminiRT by Violetta Goldman is done ${TICK}          "
 
 ./obj/get_next_line/%.o: ./src/get_next_line/%.c
 	@mkdir -p ./obj/get_next_line
@@ -54,12 +55,11 @@ norme:
 clean:
 	@rm -rf obj miniRT.bmp
 	@make clean -C ${MLX_DIR} > /dev/null
-	@echo "\033[32;1mCleaned miniRT \342\234\224\033[0m"
+	@echo "\033[32;1mCleaned miniRT ${TICK}\033[0m"
 
 fclean:	clean
 	@rm -rf ${NAME} miniRT miniRT.dySM
-	#@make fclean -C ${MLX_DIR}
-	@echo "\033[32;1mForced cleaned miniRT \342\234\224\033[0m"
+	@echo "\033[32;1mForced cleaned miniRT ${TICK}\033[0m"
 
 re:	fclean all
 
