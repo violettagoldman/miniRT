@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -Ofast -flto -march=native
 ifeq ($(D), 1)
     CFLAGS += -g3 -fsanitize=address
 endif
-
+GREEN = 
 OS = $(shell uname -s)
 ifeq ($(OS), Linux)
 	CC = clang
@@ -28,11 +28,11 @@ all: $(NAME)
 
 $(MLX):
 	@printf "\033[0;32mMaking miniRT by Violetta Goldman...\033[0m\r"
-	@make -C ${MLX_DIR} &> /dev/null
+	@make -C ${MLX_DIR} > /dev/null 2>&1
 
 $(NAME): ${MLX} ${OBJ} ${OBJ_GNL}
 	@${CC} ${OBJ} ${OBJ_GNL} ${CFLAGS} ${MLXFLAGS} -o ${NAME}
-	@echo "\033[32;1mminiRT by Violetta Goldman is done \xE2\x9C\x94\033[0m          "
+	@echo "\033[32;1mminiRT by Violetta Goldman is done \342\234\224\033[0m          "
 
 ./obj/get_next_line/%.o: ./src/get_next_line/%.c
 	@mkdir -p ./obj/get_next_line
@@ -52,14 +52,14 @@ norme:
 	@norminette ${SRC_DIR} rt.h
 
 clean:
-	@rm -rf obj
-	@make clean -C ${MLX_DIR}
-	@echo "\033[32;1mCleaned miniRT \xE2\x9C\x94\033[0m"
+	@rm -rf obj miniRT.bmp
+	@make clean -C ${MLX_DIR} > /dev/null
+	@echo "\033[32;1mCleaned miniRT \342\234\224\033[0m"
 
 fclean:	clean
 	@rm -rf ${NAME} miniRT miniRT.dySM
-	@make fclean -C ${MLX_DIR}
-	@echo "\033[32;1mForced cleaned miniRT \xE2\x9C\x94\033[0m"
+	#@make fclean -C ${MLX_DIR}
+	@echo "\033[32;1mForced cleaned miniRT \342\234\224\033[0m"
 
 re:	fclean all
 

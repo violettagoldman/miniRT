@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:27:24 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 13:05:46 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 14:55:10 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <pthread.h>
 # include "./src/get_next_line/get_next_line.h"
 # include "./minilibx_linux/mlx.h"
-//# include "./minilibx/elcapitan/mlx.h"
 # ifndef LINUX
 # define LINUX 1
 # endif

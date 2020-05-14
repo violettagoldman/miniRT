@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:48:45 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:48:48 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 14:56:47 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		screenshot(t_rt *rt)
 
 	pad = (4 - (rt->window.w * 3) % 4) % 4;
 	filesize = 54 + ((3 * rt->window.w + pad) * rt->window.h);
-	if ((fd = open("picture.bmp", O_WRONLY | O_CREAT |
+	if ((fd = open("miniRT.bmp", O_WRONLY | O_CREAT |
 					O_TRUNC | O_APPEND, 0666)) < 0)
 		return (0);
 	bmp_header(rt, fd, filesize);
