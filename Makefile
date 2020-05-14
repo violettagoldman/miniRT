@@ -1,14 +1,23 @@
 NAME = miniRT
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Ofast -flto -march=native
 ifeq ($(D), 1)
     CFLAGS += -g3 -fsanitize=address
 endif
-MLXFLAGS = -framework OpenGL -framework AppKit -Lminilibx -lmlx
-MLX = ./minilibx/libmlx.a
+
+OS = $(shell uname -s)
+ifeq ($(OS), Linux)
+	CC = clang
+	MLXFLAGS = -lm -lbsd -lXext -lX11 -Lminilibx_linux -lmlx_Linux -pthread -D LINUX=1
+	MLX = ./minilibx/libmlx.a
+	MLX_DIR = ./minilibx_linux/
+else
+	CC = gcc
+	MLXFLAGS = -framework OpenGL -framework AppKit -Lminilibx -lmlx -D LINUX=0
+	MLX = ./minilibx/libmlx.a
+	MLX_DIR = ./minilibx/
+endif
 
 SRC_DIR = ./src/
-MLX_DIR = ./minilibx/
 
 SRC = ${wildcard src/*.c}
 SRC_GNL = ${wildcard src/get_next_line/*.c}
@@ -19,10 +28,10 @@ all: $(NAME)
 
 $(MLX):
 	@printf "\033[0;32mMaking miniRT by Violetta Goldman...\033[0m\r"
-	@make -C ./minilibx &> /dev/null
+	@make -C ${MLX_DIR} &> /dev/null
 
 $(NAME): ${MLX} ${OBJ} ${OBJ_GNL}
-	@${CC} ${CFLAGS} ${MLXFLAGS} ${OBJ} ${OBJ_GNL} -o ${NAME}
+	@${CC} ${OBJ} ${OBJ_GNL} ${CFLAGS} ${MLXFLAGS} -o ${NAME}
 	@echo "\033[32;1mminiRT by Violetta Goldman is done \xE2\x9C\x94\033[0m          "
 
 ./obj/get_next_line/%.o: ./src/get_next_line/%.c
@@ -44,12 +53,12 @@ norme:
 
 clean:
 	@rm -rf obj
-	@make clean -C ./minilibx
+	@make clean -C ${MLX_DIR}
 	@echo "\033[32;1mCleaned miniRT \xE2\x9C\x94\033[0m"
 
 fclean:	clean
 	@rm -rf ${NAME} miniRT miniRT.dySM
-	@make fclean -C ./minilibx
+	@make fclean -C ${MLX_DIR}
 	@echo "\033[32;1mForced cleaned miniRT \xE2\x9C\x94\033[0m"
 
 re:	fclean all

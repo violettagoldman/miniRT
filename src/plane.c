@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/14 11:51:14 by vgoldman          #+#    #+#             */
+/*   Updated: 2020/05/14 12:18:54 by vgoldman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../rt.h"
 
 int	plane_hit(t_plane p, double min, double max, t_hit *hit, t_ray ray)
@@ -20,4 +32,4 @@ int	plane_hit(t_plane p, double min, double max, t_hit *hit, t_ray ray)
 		}
 	}
 	return (0);
-}I
+}

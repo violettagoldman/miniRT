@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rt.h                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/14 11:27:24 by vgoldman          #+#    #+#             */
+/*   Updated: 2020/05/14 13:05:46 by vgoldman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RT_H
 # define RT_H
 # include <stdlib.h>
@@ -8,8 +20,11 @@
 # include <fcntl.h>
 # include <pthread.h>
 # include "./src/get_next_line/get_next_line.h"
-# include "./minilibx/elcapitan/mlx.h"
-
+# include "./minilibx_linux/mlx.h"
+//# include "./minilibx/elcapitan/mlx.h"
+# ifndef LINUX
+# define LINUX 1
+# endif
 # define PI 3.1415926535897932385
 # define THREADS 8
 
@@ -162,93 +177,96 @@ typedef struct			s_args
 	t_rt				*rt;
 }						t_args;
 
-void		camera_init(t_rt *rt);
-double		ft_clamp(double x, double min, double max);
-t_hit		face_norm(t_hit hit, t_ray ray, t_vec normal);
-double		degrees_to_radians(double degrees);
-int			parse(char *file, t_rt *rt);
-double		ft_atof(char **s, t_rt *rt);
-int			ft_atoi(char **str, t_rt *rt);
-void		add_res(char *line, t_rt *rt);
-void		init(t_rt *rt);
-void		add_amb(char *line, t_rt *rt);
-int			check_bounds_vec(t_vec vec, int min, int max);
-int			check_bounds_col(t_color col);
-void		error(char *s, t_rt *rt);
-void		add_camera(char *line, t_rt *rt);
-void		add_light(char *line, t_rt *rt);
-void		add_sphere(char *line, t_obj *obj, t_rt *rt);
-void		add_plane(char *line, t_obj *obj, t_rt *rt);
-void		add_square(char *line, t_obj *obj, t_rt *rt);
-void		add_cylinder(char *line, t_obj *obj, t_rt *rt);
-void		add_triangle(char *line, t_obj *obj, t_rt *rt);
-void		send_to_obj(char *line, t_rt *rt);
-void		check_parse(t_rt rt);
-int			spaces(char c);
-t_ray		ray_get(t_camera c, double u, double v);
-t_ray		ray_new(t_vec o, t_vec d);
-t_vec		ray_color(t_rt *rt, t_ray ray);
-t_vec		sphere_norm(t_sphere s, t_vec pi);
-double		hit_sphere(t_sphere s, double min, double max, t_hit *hit,
-			t_ray ray);
-t_sphere	*create_sphere(t_vec c, double r, t_color color);
-t_vec		vec_add(t_vec a, t_vec b);
-t_vec		vec_sub(t_vec a, t_vec b);
-t_vec		vec_mult(t_vec a, double i);
-t_vec		vec_div(t_vec a, double i);
-double		vec_dot(t_vec a, t_vec b);
-t_vec		vec_norm(t_vec vec);
-t_vec		vec_new(double x, double y, double z);
-t_vec		vec_cross(t_vec a, t_vec b);
-t_vec		vec_cross2(t_vec a, t_vec b);
-t_vec		unit_vector(t_vec vec);
-double		vec_len(t_vec vec);
-void		create_window(t_window *window, t_rt *rt);
-void		put_pixel(t_window window, int x, int y, t_vec color);
-int			display(t_rt *rt);
-void		*render(void *arg);
-t_vec		vec_at(t_ray ray, double t);
-t_sphere	sphere_new(t_vec c, double r, t_color col);
-t_color		color_new(int r, int g, int b);
-void		vec_print(t_vec vec);
-int			program_exited(void *rt);
-int			key_pressed(int key, t_rt *rt);
-double		intersect(t_rt *rt, t_hit *hit, t_ray ray, t_obj *obj);
-t_vec		color_to_vec(t_color col);
-t_vec		vec_clamp(t_vec col);
-int			square_hit(t_square sq, double min, double max, t_hit *hit,
-			t_ray ray);
-int			plane_hit(t_plane p, double min, double max, t_hit *hit,
-			t_ray ray);
-double		hit_get(t_obj *obj, double min, double closest, t_hit *hit,
-			t_ray ray);
-int			threads_init(t_rt *rt);
-int			triangle_hit(t_triangle tr, double min, double max, t_hit *hit,
-			t_ray ray);
-t_vec		triangle_norm(t_triangle tr);
-int			cylinder_hit(t_cylinder cy, double min, double max, t_hit *hit,
-			t_ray ray);
-int			base_hit(t_cylinder cy, t_ray ray, double *dist, t_vec c,
-			t_vec center);
-t_vec		cylinder_norm(t_cylinder cy, t_vec p);
-t_vec		rotation_x(t_vec vec, double x);
-t_vec		rotation_y(t_vec vec, double y);
-t_vec		rotation_z(t_vec vec, double z);
-t_vec		rotation(t_vec vec, t_vec angle);
-void		points(t_square sq, t_vec p[4]);
-t_vec		color_get(t_obj obj);
-t_vec		vec_mult_vec(t_vec a, t_vec b);
-int			ft_strcmp(char *s1, char *s2);
-int			check_file_name(char *file, t_rt *rt);
-t_window	window_init(t_rt *rt);
-t_vec		get_norm(t_obj obj, t_hit hit);
-void		camera_switch(t_rt *rt, int nb);
-int			get_pixel(t_window *window, unsigned int x, unsigned int y);
-void		int_to_char(int n, unsigned char *src);
-int			screenshot(t_rt *rt);
-void	bmp_pixels(t_rt *rt, int fd, int pad);
-void	bmp_header(t_rt *rt, int fd, int filesize);
-int		mouse_rotation(int b, int x, int y, t_rt *rt);
-void	free_rt(t_rt *rt);
+void					camera_init(t_rt *rt);
+double					ft_clamp(double x, double min, double max);
+t_hit					face_norm(t_hit hit, t_ray ray, t_vec normal);
+double					degrees_to_radians(double degrees);
+int						parse(char *file, t_rt *rt);
+double					ft_atof(char **s, t_rt *rt);
+int						ft_atoi(char **str, t_rt *rt);
+void					add_res(char *line, t_rt *rt);
+void					init(t_rt *rt);
+void					add_amb(char *line, t_rt *rt);
+int						check_bounds_vec(t_vec vec, int min, int max);
+int						check_bounds_col(t_color col);
+void					error(char *s, t_rt *rt);
+void					add_camera(char *line, t_rt *rt);
+void					add_light(char *line, t_rt *rt);
+void					add_sphere(char *line, t_obj *obj, t_rt *rt);
+void					add_plane(char *line, t_obj *obj, t_rt *rt);
+void					add_square(char *line, t_obj *obj, t_rt *rt);
+void					add_cylinder(char *line, t_obj *obj, t_rt *rt);
+void					add_triangle(char *line, t_obj *obj, t_rt *rt);
+void					send_to_obj(char *line, t_rt *rt);
+void					check_parse(t_rt rt);
+int						spaces(char c);
+t_ray					ray_get(t_camera c, double u, double v);
+t_ray					ray_new(t_vec o, t_vec d);
+t_vec					ray_color(t_rt *rt, t_ray ray);
+t_vec					sphere_norm(t_sphere s, t_vec pi);
+double					hit_sphere(t_sphere s, double min,
+						double max, t_hit *hit, t_ray ray);
+t_sphere				*create_sphere(t_vec c, double r, t_color color);
+t_vec					vec_add(t_vec a, t_vec b);
+t_vec					vec_sub(t_vec a, t_vec b);
+t_vec					vec_mult(t_vec a, double i);
+t_vec					vec_div(t_vec a, double i);
+double					vec_dot(t_vec a, t_vec b);
+t_vec					vec_norm(t_vec vec);
+t_vec					vec_new(double x, double y, double z);
+t_vec					vec_cross(t_vec a, t_vec b);
+t_vec					vec_cross2(t_vec a, t_vec b);
+t_vec					unit_vector(t_vec vec);
+double					vec_len(t_vec vec);
+void					create_window(t_window *window, t_rt *rt);
+void					put_pixel(t_window window, int x, int y,
+						t_vec color);
+int						display(t_rt *rt);
+void					*render(void *arg);
+t_vec					vec_at(t_ray ray, double t);
+t_sphere				sphere_new(t_vec c, double r, t_color col);
+t_color					color_new(int r, int g, int b);
+void					vec_print(t_vec vec);
+int						program_exited(void *rt);
+int						key_pressed(int key, t_rt *rt);
+double					intersect(t_rt *rt, t_hit *hit, t_ray ray,
+						t_obj *obj);
+t_vec					color_to_vec(t_color col);
+t_vec					vec_clamp(t_vec col);
+int						square_hit(t_square sq, double min, double max,
+						t_hit *hit, t_ray ray);
+int						plane_hit(t_plane p, double min, double max,
+						t_hit *hit, t_ray ray);
+double					hit_get(t_obj *obj, double min, double closest,
+						t_hit *hit, t_ray ray);
+int						threads_init(t_rt *rt);
+int						triangle_hit(t_triangle tr, double min,
+						double max, t_hit *hit, t_ray ray);
+t_vec					triangle_norm(t_triangle tr);
+int						cylinder_hit(t_cylinder cy, double min,
+						double max, t_hit *hit, t_ray ray);
+int						base_hit(t_cylinder cy, t_ray ray, double *dist,
+						t_vec c, t_vec center);
+t_vec					cylinder_norm(t_cylinder cy, t_vec p);
+t_vec					rotation_x(t_vec vec, double x);
+t_vec					rotation_y(t_vec vec, double y);
+t_vec					rotation_z(t_vec vec, double z);
+t_vec					rotation(t_vec vec, t_vec angle);
+void					points(t_square sq, t_vec p[4]);
+t_vec					color_get(t_obj obj);
+t_vec					vec_mult_vec(t_vec a, t_vec b);
+int						ft_strcmp(char *s1, char *s2);
+int						check_file_name(char *file, t_rt *rt);
+t_window				window_init(t_rt *rt);
+t_vec					get_norm(t_obj obj, t_hit hit);
+void					camera_switch(t_rt *rt, int nb);
+int						get_pixel(t_window *window, unsigned int x,
+						unsigned int y);
+void					int_to_char(int n, unsigned char *src);
+int						screenshot(t_rt *rt);
+void					bmp_pixels(t_rt *rt, int fd, int pad);
+void					bmp_header(t_rt *rt, int fd, int filesize);
+int						mouse_rotation(int b, int x, int y, t_rt *rt);
+void					free_rt(t_rt *rt);
 
 #endif
