@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:48:36 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 11:48:38 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 22:02:10 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	add_res(char *line, t_rt *rt)
 	line++;
 	x = ft_atoi(&line, rt);
 	y = ft_atoi(&line, rt);
-	if (x < 0 || y < 0 || rt->res.x != -1 || rt->res.y != -1)
+	if (x <= 0 || y <= 0 || rt->res.x != -1 || rt->res.y != -1)
 		error("Error\nR: already exists or values are out of bounds", rt);
 	rt->res.x = x;
 	rt->res.y = y;

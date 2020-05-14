@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:53:21 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 16:54:55 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 21:42:14 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_vec	vec_at(t_ray ray, double t)
 
 void	vec_print(t_vec vec)
 {
-	printf("%f %f %f\n", vec.x, vec.y, vec.z);
+	(void)vec;
 }
 
 t_vec	vec_mult_vec(t_vec a, t_vec b)

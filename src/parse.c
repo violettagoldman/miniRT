@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:51:06 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 18:40:10 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/14 21:56:23 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	send_to(char *line, t_rt *rt)
 
 void	check_parse(t_rt rt)
 {
-	if ((rt.res.x == -1 && rt.res.y == -1) || rt.amb.range == -1)
+	if ((rt.res.x == -1 && rt.res.y == -1) || rt.amb.range == -1 ||
+			rt.c == NULL || (rt.l == NULL && rt.amb.range == 0))
 		error("Error\nEmpty or not correctly formated file", &rt);
 }
 
