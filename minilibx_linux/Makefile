@@ -14,9 +14,9 @@
 all	: do_configure
 
 do_configure	:
-	@./configure &> /dev/null
+	./configure
 
 clean	:
-	@./configure clean &> /dev/null
+	./configure clean
 
 re	: clean all
