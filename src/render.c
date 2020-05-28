@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:52:00 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 20:26:34 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/28 16:02:51 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_vec	ray_color(t_rt *rt, t_ray ray)
 	{
 		rc.n = get_norm(rc.obj, rc.hit);
 		rc.col = vec_mult_vec(color_get(rc.obj),
-				vec_mult(color_to_vec(rt->amb.col), rt->amb.range));
+			vec_mult(color_to_vec(rt->amb.col), rt->amb.range));
 		while (rc.tmp)
 		{
 			ray_color_helper(&rc);
@@ -37,8 +37,7 @@ t_vec	ray_color(t_rt *rt, t_ray ray)
 	}
 	rc.unit_direction = unit_vector(ray.d);
 	rc.t = 0.5 * (rc.unit_direction.y + 1.0);
-	return (vec_add(vec_mult(vec_new(1.0, 1.0, 1.0), 1.0 - rc.t),
-			vec_mult(vec_new(0.5, 0.7, 1.0), rc.t)));
+	return (vec_new(0, 0, 0));
 }
 
 void	*render(void *arg)

@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:49:10 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/14 16:59:37 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/05/28 15:57:59 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int				cylinder_hit(t_cylinder cy, t_params par)
 	double		d;
 	double		r;
 
+	cy.norm = vec_norm(cy.norm);
 	r = cy.d / 2;
 	x = vec_sub(par.ray.o, cy.vec);
 	a = vec_dot(par.ray.d, par.ray.d) - sqr(vec_dot(par.ray.d, cy.norm));
