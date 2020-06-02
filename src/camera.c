@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:48:54 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/06/02 17:51:00 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/06/02 18:14:47 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,14 @@ void	camera_init(t_rt *rt)
 	while (tmp)
 	{
 		camera_init_helper(tmp, &pc, i, rt);
-		pc.vup = vec_new(0, -1, 0);
-		pc.w = vec_norm(vec_sub(tmp->from, tmp->at));
-		pc.u = vec_norm(vec_cross(pc.vup, pc.w));
-		t_vec v = vec_cross(pc.w, pc.u);
+		pc.v = vec_cross(pc.w, pc.u);
 		tmp->horizontal = (vec_mult(pc.u, pc.viewport_width));
-		tmp->vertical = (vec_mult(v, pc.viewport_height));
+		tmp->vertical = (vec_mult(pc.v, pc.viewport_height));
 		tmp->vertical = vec_mult_vec(tmp->vertical, vec_new(0, -1, 0));
-		tmp->lower_left_corner = vec_sub(tmp->origin, vec_mult(tmp->horizontal, 0.5));
-		tmp->lower_left_corner = vec_sub(tmp->lower_left_corner, vec_mult(tmp->vertical, 0.5));
+		tmp->lower_left_corner = vec_sub(tmp->origin,
+			vec_mult(tmp->horizontal, 0.5));
+		tmp->lower_left_corner = vec_sub(tmp->lower_left_corner,
+			vec_mult(tmp->vertical, 0.5));
 		tmp->lower_left_corner = vec_sub(tmp->lower_left_corner, pc.w);
 		tmp = tmp->next;
 		i++;
@@ -53,6 +52,9 @@ void	camera_init_helper(t_camera *tmp, t_pc *pc, int i, t_rt *rt)
 	pc->h = tan(pc->theta / 2);
 	pc->viewport_height = 2 * pc->h;
 	pc->viewport_width = pc->aspect_ratio * pc->viewport_height;
+	pc->vup = vec_new(0, -1, 0);
+	pc->w = vec_norm(vec_sub(tmp->from, tmp->at));
+	pc->u = vec_norm(vec_cross(pc->vup, pc->w));
 }
 
 void	camera_switch(t_rt *rt, int nb)

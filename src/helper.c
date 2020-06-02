@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 19:22:04 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/28 16:35:57 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/06/02 18:12:13 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	ray_color_helper(t_rc *rc)
 			vec_norm(rc->n));
 	rc->light_sum = vec_mult(color_to_vec(rc->tmp->col),
 		rc->dt * rc->tmp->bright);
-rc->shadow.o = rc->tmp->vec;
+	rc->shadow.o = rc->tmp->vec;
 	rc->shadow.d = vec_norm(vec_sub(rc->hit.p, rc->tmp->vec));
 }
