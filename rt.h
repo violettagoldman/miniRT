@@ -6,7 +6,7 @@
 /*   By: vgoldman <vgoldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 11:27:24 by vgoldman          #+#    #+#             */
-/*   Updated: 2020/05/18 14:34:24 by vgoldman         ###   ########.fr       */
+/*   Updated: 2020/06/02 17:52:54 by vgoldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,11 +188,15 @@ typedef struct			s_params
 
 typedef struct			s_pc
 {
-	double				half_h;
-	double				half_w;
+	double				aspect_ratio;
+	double				theta;
+	double				h;
+	double				viewport_height;
+	double				viewport_width;
+	t_vec				vup;
+	t_vec				w;
 	t_vec				u;
 	t_vec				v;
-	t_vec				w;
 }						t_pc;
 
 typedef struct			s_hs
@@ -338,5 +342,7 @@ void					free_rt(t_rt *rt);
 void					key_pressed_help(int key, t_rt *rt);
 void					hit_sphere_helper(t_sphere s, t_params *params,
 						t_hs *hs);
+void					camera_init_helper(t_camera *tmp, t_pc *pc, int i,
+						t_rt *rt);
 
 #endif
